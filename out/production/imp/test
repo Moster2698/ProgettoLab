@@ -1,0 +1,6 @@
+
+fun f(x) {
+y = x + 10;
+return y }
+y = 5;
+{ out(f(y)) } nd { out(y) }
