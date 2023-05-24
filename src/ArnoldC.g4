@@ -12,10 +12,10 @@ com:
     IF expression com ELSE com ENDIF                                            # arnoldIFElse
     | IF expression com ENDIF                                                   # arnoldIF
     | WHILE expression com ENDWHILE                                             # arnoldWhile
-    | PRINT ID                                                            # arnoldPrintID
-    | PRINT STRING_LITERAL                                                        #arnoldPrintString
-    | ASSIGNVARIABLE ID SETVALUE com operations ENDASSIGNVARIABLE         # arnoldAssign
-    | DECLARE ID SETINITIALVALUE expression                               # arnoldDECLARE
+    | PRINT ID                                                                  # arnoldPrintID
+    | PRINT STRING_LITERAL                                                      #arnoldPrintString
+    | ASSIGNVARIABLE ID SETVALUE com operations ENDASSIGNVARIABLE               # arnoldAssign
+    | DECLARE ID SETINITIALVALUE expression                                     # arnoldDECLARE
     ;
 expression
     : ID #varexpr

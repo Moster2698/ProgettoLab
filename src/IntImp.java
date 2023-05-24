@@ -9,7 +9,7 @@ public class IntImp extends ImpBaseVisitor<Value> {
 
     private final LinkedList<Conf> vars;
     private final Conf globalVars;
-    private final Set<FunValue> funs = new HashSet<>();
+    private final Set<FunValue> functions = new HashSet<>();
 
     public IntImp(Conf conf) {
         this.globalVars = conf;
@@ -40,7 +40,7 @@ public class IntImp extends ImpBaseVisitor<Value> {
             }
         }
         FunValue fun = new FunValue(funID, params, ctx.com(), ctx.exp());
-        if(!funs.add(fun)){
+        if(!functions.add(fun)){
             System.err.println("Fun " + funID + " already defined");
             System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
             System.exit(1);
@@ -246,7 +246,7 @@ public class IntImp extends ImpBaseVisitor<Value> {
         String id = ctx.ID().getText();
         List<ImpParser.ExpContext> params = ctx.exp();
 
-        for(FunValue fun:funs) {
+        for(FunValue fun: functions) {
             if (fun.getFunId().equals(id)) {
                 if (params.size() != fun.getParamsLength()) {
                     System.err.println("Function " + fun + " called with the wrong number of arguments");
