@@ -3,41 +3,37 @@ program
     : arnoldIni;
 
 arnoldIni
-    : STARTMAIN coms ENDMAIN
+    : STARTMAIN com* ENDMAIN
     | STARTMAIN ENDMAIN
     ;
 
-coms: com*;
 com:
     IF expression com ELSE com ENDIF                                            # arnoldIFElse
     | IF expression com ENDIF                                                   # arnoldIF
     | WHILE expression com ENDWHILE                                             # arnoldWhile
     | PRINT ID                                                                  # arnoldPrintID
-    | PRINT STRING_LITERAL                                                      #arnoldPrintString
-    | ASSIGNVARIABLE ID SETVALUE com operations ENDASSIGNVARIABLE               # arnoldAssign
+    | PRINT STRING_LITERAL                                                      # arnoldPrintString
+    | ASSIGNVARIABLE ID SETVALUE com arnoldOperation+ ENDASSIGNVARIABLE         # arnoldAssign
     | DECLARE ID SETINITIALVALUE expression                                     # arnoldDECLARE
     ;
 expression
-    : ID #varexpr
-    | NUMBER     #numberexpr
-    | AT TRUE    #trueexpr
-    | AT FALSE   #falseexpr
-    ;
-operations
-    : operation | operations operation
+    : ID         #arnoldIdexpr
+    | NUMBER     #arnoldNumberexpr
+    | AT BOOL    #arnoldBoolExp
     ;
 
-operation
-    : PLUSOPERATOR expression           #plusop
-    | MINUSOPERATOR expression          #minusop
-    | MULTIPLICATIONOPERATOR expression #multiplicationop
-    | DIVISIONOPERATOR expression       #divisionop
-    | EQUALTO expression                #equalop
-    | GREATERTHAN expression            #greaterop
-    | OR expression                     #orop
-    | AND expression                    #andop
+arnoldOperation
+    : PLUSOPERATOR expression           #arnoldPlus
+    | MINUSOPERATOR expression          #arnoldMinus
+    | MULTIPLICATIONOPERATOR expression #arnoldMultiplication
+    | DIVISIONOPERATOR expression       #arnoldDivision
+    | EQUALTO expression                #arnoldEqual
+    | GREATERTHAN expression            #arnoldGreater
+    | OR expression                     #arnoldOr
+    | AND expression                    #arnoldAnd
     ;
 
+BOOL : TRUE | FALSE ;
 
 STARTMAIN
     : 'IT\'S SHOWTIME'

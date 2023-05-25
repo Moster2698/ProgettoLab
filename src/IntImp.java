@@ -1,3 +1,4 @@
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import value.*;
 
@@ -10,6 +11,8 @@ public class IntImp extends ImpBaseVisitor<Value> {
     private final LinkedList<Conf> vars;
     private final Conf globalVars;
     private final Set<FunValue> functions = new HashSet<>();
+
+    private final Stack<Value> stackArnold = new Stack<>();
 
     public IntImp(Conf conf) {
         this.globalVars = conf;
@@ -76,11 +79,11 @@ public class IntImp extends ImpBaseVisitor<Value> {
         return (ComValue) visit(ctx);
     }
 
-    private ExpValue<?> visitExp(ImpParser.ExpContext ctx) {
+    private ExpValue<?> visitExp(ParserRuleContext ctx) {
         return (ExpValue<?>) visit(ctx);
     }
 
-    private int visitNatExp(ImpParser.ExpContext ctx) {
+    private int visitNatExp(ParserRuleContext ctx) {
         try {
             return ((NatValue) visitExp(ctx)).toJavaValue();
         } catch (ClassCastException e) {
@@ -96,7 +99,7 @@ public class IntImp extends ImpBaseVisitor<Value> {
         return 0; // unreachable code
     }
 
-    private boolean visitBoolExp(ImpParser.ExpContext ctx) {
+    private boolean visitBoolExp(ParserRuleContext ctx) {
         try {
             return ((BoolValue) visitExp(ctx)).toJavaValue();
         } catch (ClassCastException e) {
@@ -112,6 +115,7 @@ public class IntImp extends ImpBaseVisitor<Value> {
         return false; // unreachable code
     }
 
+    /***********************************Inizio Comandi***************************************/
     @Override
     public ComValue visitProg(ImpParser.ProgContext ctx) {
         for(ImpParser.FunContext f : ctx.fun())
@@ -138,6 +142,11 @@ public class IntImp extends ImpBaseVisitor<Value> {
     @Override
     public ComValue visitSkip(ImpParser.SkipContext ctx) {
         return ComValue.INSTANCE;
+    }
+
+    @Override
+    public Value visitArnoldInit(ImpParser.ArnoldInitContext ctx) {
+        return visit(ctx.arnoldIni());
     }
 
     @Override
@@ -239,6 +248,113 @@ public class IntImp extends ImpBaseVisitor<Value> {
         }
 
         return vars.getLast().get(id);
+    }
+
+    @Override
+    public Value visitProgram(ImpParser.ProgramContext ctx) {
+        return visit(ctx.arnoldIni());
+    }
+
+    @Override
+    public Value visitArnoldIni(ImpParser.ArnoldIniContext ctx) {
+        //TODO
+    }
+
+    @Override
+    public Value visitArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx) {
+        String id = ctx.ID().getText();
+
+        if(!vars.getLast().contains(id)) {
+            System.err.println("Variable " + id + " used but never instantiated");
+            System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
+
+            System.exit(1);
+        }
+
+        return vars.getLast().get(id);
+    }
+
+    @Override
+    public NatValue visitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx) {
+        return new NatValue(Integer.parseInt(ctx.NUMBER().getText()));
+    }
+
+    @Override
+    public BoolValue visitArnoldBoolExp(ImpParser.ArnoldBoolExpContext ctx) {
+        return new BoolValue(Boolean.parseBoolean(ctx.BOOL().getText()));
+    }
+
+    @Override
+    public NatValue visitArnoldPlus(ImpParser.ArnoldPlusContext ctx) {
+        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
+        int left = Integer.parseInt(stackArnold.pop().toString());
+        int right = visitNatExp(ctx.expression());
+
+        return new NatValue(left + right);
+    }
+
+    @Override
+    public NatValue visitArnoldMinus(ImpParser.ArnoldMinusContext ctx) {
+        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
+        int left = Integer.parseInt(stackArnold.pop().toString());
+        int right = visitNatExp(ctx.expression());
+
+        return new NatValue(left - right);
+    }
+
+    @Override
+    public NatValue visitArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx) {
+        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
+        int left = Integer.parseInt(stackArnold.pop().toString());
+        int right = visitNatExp(ctx.expression());
+
+        return new NatValue(left * right);
+    }
+
+    @Override
+    public NatValue visitArnoldDivision(ImpParser.ArnoldDivisionContext ctx) {
+        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
+        int left = Integer.parseInt(stackArnold.pop().toString());
+        int right = visitNatExp(ctx.expression());
+
+        return new NatValue(left / right);
+    }
+
+    @Override
+    public BoolValue visitArnoldEqual(ImpParser.ArnoldEqualContext ctx) {
+        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
+        int left = Integer.parseInt(stackArnold.pop().toString());
+        int right = visitNatExp(ctx.expression());
+
+        return new BoolValue(left == right);
+    }
+
+    @Override
+    public BoolValue visitArnoldGreater(ImpParser.ArnoldGreaterContext ctx) {
+        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
+        int left = Integer.parseInt(stackArnold.pop().toString());
+        int right = visitNatExp(ctx.expression());
+
+        return new BoolValue(left > right);
+    }
+
+    @Override
+    public BoolValue visitArnoldOr(ImpParser.ArnoldOrContext ctx) {
+        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
+        boolean left = Boolean.parseBoolean(stackArnold.pop().toString();
+        boolean right = visitBoolExp(ctx.expression());
+
+        return new BoolValue(left || right);
+
+    }
+
+    @Override
+    public BoolValue visitArnoldAnd(ImpParser.ArnoldAndContext ctx) {
+        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
+        boolean left = Boolean.parseBoolean(stackArnold.pop().toString();
+        boolean right = visitBoolExp(ctx.expression());
+
+        return new BoolValue(left && right);
     }
 
     @Override
