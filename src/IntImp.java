@@ -1,5 +1,8 @@
+import Exceptions.CastException;
+import com.sun.jdi.IntegerValue;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.apache.commons.lang3.StringEscapeUtils;
 import value.*;
 
 import java.util.*;
@@ -8,11 +11,12 @@ import java.util.concurrent.ThreadLocalRandom;
 import gen.*;
 public class IntImp extends ImpBaseVisitor<Value> {
 
+    /*HaveFun*/
     private final LinkedList<Conf> vars;
     private final Conf globalVars;
     private final Set<FunValue> functions = new HashSet<>();
 
-    private final Stack<Value> stackArnold = new Stack<>();
+    private final ArnoldConf arnoldConf = new ArnoldConf();
 
     public IntImp(Conf conf) {
         this.globalVars = conf;
@@ -79,6 +83,10 @@ public class IntImp extends ImpBaseVisitor<Value> {
         return (ComValue) visit(ctx);
     }
 
+    private ComValue visitArnoldCom(ImpParser.ArnoldComContext ctx) {
+        return (ComValue) visit(ctx);
+    }
+
     private ExpValue<?> visitExp(ParserRuleContext ctx) {
         return (ExpValue<?>) visit(ctx);
     }
@@ -87,32 +95,39 @@ public class IntImp extends ImpBaseVisitor<Value> {
         try {
             return ((NatValue) visitExp(ctx)).toJavaValue();
         } catch (ClassCastException e) {
-            System.err.println("Type mismatch exception!");
-            System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
-            System.err.println(">>>>>>>>>>>>>>>>>>>>>>>>");
-            System.err.println(ctx.getText());
-            System.err.println("<<<<<<<<<<<<<<<<<<<<<<<<");
-            System.err.println("> Natural expression expected.");
-            System.exit(1);
+            CastException.castException("Natural", ctx);
         }
 
         return 0; // unreachable code
+    }
+
+    private float visitFloatExp(ParserRuleContext ctx) {
+        try {
+            return ((FloatValue) visitExp(ctx)).toJavaValue();
+        } catch (ClassCastException e) {
+            CastException.castException("Float", ctx);
+        }
+
+        return 0F; // unreachable code
     }
 
     private boolean visitBoolExp(ParserRuleContext ctx) {
         try {
             return ((BoolValue) visitExp(ctx)).toJavaValue();
         } catch (ClassCastException e) {
-            System.err.println("Type mismatch exception!");
-            System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
-            System.err.println(">>>>>>>>>>>>>>>>>>>>>>>>");
-            System.err.println(ctx.getText());
-            System.err.println("<<<<<<<<<<<<<<<<<<<<<<<<");
-            System.err.println("> Boolean expression expected.");
-            System.exit(1);
+            CastException.castException("Boolean", ctx);
         }
-
         return false; // unreachable code
+    }
+
+    private String VisitStringExp(ParserRuleContext ctx){
+        try {
+            return ((StringValue)visit(ctx)).toJavaValue();
+        }
+        catch (ClassCastException e) {
+            CastException.castException("String", ctx);
+        }
+        return null;
     }
 
     /***********************************Inizio Comandi***************************************/
@@ -250,33 +265,89 @@ public class IntImp extends ImpBaseVisitor<Value> {
         return vars.getLast().get(id);
     }
 
+    /*ArnolC program*/
     @Override
     public Value visitProgram(ImpParser.ProgramContext ctx) {
         return visit(ctx.arnoldIni());
     }
 
     @Override
-    public Value visitArnoldIni(ImpParser.ArnoldIniContext ctx) {
-        //TODO
+    public ComValue visitArnoldIni(ImpParser.ArnoldIniContext ctx) {
+        int i=0;
+        for(i = 0; i < ctx.arnoldCom().size() - 1; i++){
+            visitArnoldCom(ctx.arnoldCom(i));
+        }
+        return visitArnoldCom(ctx.arnoldCom(i));
     }
 
     @Override
-    public Value visitArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx) {
+    public ComValue visitArnoldIfElse(ImpParser.ArnoldIfElseContext ctx) {
+        return visitBoolExp(ctx.expression())
+                ? visitArnoldCom(ctx.arnoldCom(0))
+                : visitArnoldCom(ctx.arnoldCom(1));
+    }
+
+    @Override
+    public ComValue visitArnoldIf(ImpParser.ArnoldIfContext ctx) {
+        if(visitBoolExp(ctx.expression()))
+            return visitArnoldCom(ctx.arnoldCom());
+        return null; //TODO: null?
+    }
+
+    @Override
+    public ComValue visitArnoldWhile(ImpParser.ArnoldWhileContext ctx) {
+        if (!visitBoolExp(ctx.expression()))
+            return ComValue.INSTANCE;
+        visitArnoldCom(ctx.arnoldCom());
+
+        return visitArnoldWhile(ctx);
+    }
+
+    @Override
+    public ComValue visitArnoldPrintExp(ImpParser.ArnoldPrintExpContext ctx) {
+        String valueToPrint = VisitStringExp(ctx.expression());
+        System.out.println(valueToPrint);
+
+        return ComValue.INSTANCE;
+    }
+
+    @Override
+    public ComValue visitArnoldAssign(ImpParser.ArnoldAssignContext ctx) {
+        String id = ctx.ID().getText();
+        ExpValue<?> v = visitExp((ctx.expression()));
+
+        arnoldConf.update(id, v);
+        return ComValue.INSTANCE;
+    }
+
+    @Override
+    public ComValue visitArnoldDeclare(ImpParser.ArnoldDeclareContext ctx) {
         String id = ctx.ID().getText();
 
-        if(!vars.getLast().contains(id)) {
-            System.err.println("Variable " + id + " used but never instantiated");
-            System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
-
-            System.exit(1);
-        }
-
-        return vars.getLast().get(id);
+        arnoldConf.update(id, null);
+        return ComValue.INSTANCE;
     }
 
     @Override
-    public NatValue visitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx) {
-        return new NatValue(Integer.parseInt(ctx.NUMBER().getText()));
+    public ExpValue<?> visitArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx) {
+        String id = ctx.ID().getText();
+        if(!arnoldConf.contains(id)){
+            System.err.println("Variable "+ id + "used but never instantiated");
+            System.err.println("@"+ ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
+            System.exit(1);
+        }
+        return arnoldConf.get(id);
+    }
+
+    @Override
+    public Value visitArnoldString(ImpParser.ArnoldStringContext ctx) {
+        return new StringValue(StringEscapeUtils.unescapeJava(ctx.STRING().getText().substring(1,
+                ctx.STRING().getText().length() - 1)));
+    }
+
+    @Override
+    public FloatValue visitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx) {
+        return new FloatValue(Float.parseFloat(ctx.FLOAT().getText()));
     }
 
     @Override
@@ -285,73 +356,61 @@ public class IntImp extends ImpBaseVisitor<Value> {
     }
 
     @Override
-    public NatValue visitArnoldPlus(ImpParser.ArnoldPlusContext ctx) {
-        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
-        int left = Integer.parseInt(stackArnold.pop().toString());
-        int right = visitNatExp(ctx.expression());
-
-        return new NatValue(left + right);
+    public FloatValue visitArnoldPlus(ImpParser.ArnoldPlusContext ctx) {
+        float left = Float.parseFloat(arnoldConf.getLast().toString());
+        float right = visitNatExp(ctx.expression());
+        return new FloatValue(left + right);
     }
 
     @Override
-    public NatValue visitArnoldMinus(ImpParser.ArnoldMinusContext ctx) {
-        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
-        int left = Integer.parseInt(stackArnold.pop().toString());
-        int right = visitNatExp(ctx.expression());
+    public FloatValue visitArnoldMinus(ImpParser.ArnoldMinusContext ctx) {
+        float left = Float.parseFloat(arnoldConf.getLast().toString());
+        float right = visitFloatExp(ctx.expression());
 
-        return new NatValue(left - right);
+        return new FloatValue(Math.max(left - right, 0));
     }
 
     @Override
-    public NatValue visitArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx) {
-        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
-        int left = Integer.parseInt(stackArnold.pop().toString());
-        int right = visitNatExp(ctx.expression());
-
-        return new NatValue(left * right);
+    public FloatValue visitArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx) {
+        float left = Float.parseFloat(arnoldConf.getLast().toString());
+        float right = visitFloatExp(ctx.expression());
+        return new FloatValue(left * right);
     }
 
     @Override
-    public NatValue visitArnoldDivision(ImpParser.ArnoldDivisionContext ctx) {
-        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
-        int left = Integer.parseInt(stackArnold.pop().toString());
-        int right = visitNatExp(ctx.expression());
-
-        return new NatValue(left / right);
+    public FloatValue visitArnoldDivision(ImpParser.ArnoldDivisionContext ctx) {
+        float left = Float.parseFloat(arnoldConf.getLast().toString());
+        float right = visitNatExp(ctx.expression());
+        return new FloatValue(left / right);
     }
 
     @Override
     public BoolValue visitArnoldEqual(ImpParser.ArnoldEqualContext ctx) {
-        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
-        int left = Integer.parseInt(stackArnold.pop().toString());
-        int right = visitNatExp(ctx.expression());
-
-        return new BoolValue(left == right);
+        ExpValue<?> left = arnoldConf.getLast();
+        ExpValue<?> right = visitExp(ctx.expression());
+        return new BoolValue(left.equals(right));
     }
 
     @Override
     public BoolValue visitArnoldGreater(ImpParser.ArnoldGreaterContext ctx) {
-        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
-        int left = Integer.parseInt(stackArnold.pop().toString());
-        int right = visitNatExp(ctx.expression());
-
-        return new BoolValue(left > right);
+        float left = Float.parseFloat(arnoldConf.getLast().toString());
+        float right = visitNatExp(ctx.expression());
+        if (left > right)
+            return new BoolValue(true);
+        return new BoolValue(false);
     }
 
     @Override
     public BoolValue visitArnoldOr(ImpParser.ArnoldOrContext ctx) {
-        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
-        boolean left = Boolean.parseBoolean(stackArnold.pop().toString();
+        boolean left = Boolean.parseBoolean(arnoldConf.getLast().toString());
         boolean right = visitBoolExp(ctx.expression());
 
         return new BoolValue(left || right);
-
     }
 
     @Override
     public BoolValue visitArnoldAnd(ImpParser.ArnoldAndContext ctx) {
-        /*Recuperando il valore dallo stack ho la sicurezza che sia corretto*/
-        boolean left = Boolean.parseBoolean(stackArnold.pop().toString();
+        boolean left = Boolean.parseBoolean(arnoldConf.getLast().toString());
         boolean right = visitBoolExp(ctx.expression());
 
         return new BoolValue(left && right);
