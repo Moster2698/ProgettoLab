@@ -1,0 +1,24 @@
+# Ignora la cartella .vscode ricorsivamente
+**/.vscode/
+
+# Ignora i file generati dalla compilazione Java
+/target/
+/out/
+
+# Ignora i file di configurazione dell'IDE Eclipse
+.classpath
+.project
+.settings/
+
+# Ignora i file generati dall'IDE IntelliJ
+.idea/
+
+# Ignora i file generati dal sistema operativo macOS
+.DS_Store
+
+# Ignora i file di log
+*.log
+
+# Mantieni ricorsivamente le cartelle sottostanti
+/Exceptions
+/gen
