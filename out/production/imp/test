@@ -1,8 +1,0 @@
-fun f() {
-          ${
-          IT'S SHOWTIME
-          TALK TO THE HAND "Anna Karenina"
-          YOU HAVE BEEN TERMINATED
-          }$;
-     return 42
-}

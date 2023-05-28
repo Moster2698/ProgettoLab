@@ -70,7 +70,7 @@ SEMICOLON : ';' ;
 DOTG      : '.g';
 ND        : 'nd';
 DOLLAR    : '$';
-ID : [a-z]+[0-9]*[A-Z]* ;
+ID : [a-z]+[0-9]*;
 
 WS : [ \t\r\n]+ -> skip ;
 

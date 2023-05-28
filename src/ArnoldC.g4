@@ -6,9 +6,9 @@ arnoldIni           : STARTMAIN arnoldCom* ENDMAIN;
 
 arnoldCom           : IF expression arnoldCom ELSE arnoldCom ENDIF                                                         # arnoldIfElse
                     | IF expression arnoldCom ENDIF                                                                        # arnoldIf
-                    | WHILE expression arnoldCom ENDWHILE                                                                  # arnoldWhile
+                    | WHILE expression arnoldCom+ ENDWHILE                                                                  # arnoldWhile
                     | PRINT expression                                                                                     # arnoldPrintExp
-                    | ASSIGNVARIABLE ID SETVALUE expression ENDASSIGNVARIABLE                                              # arnoldAssign
+                    | ASSIGNVARIABLE ID SETVALUE expression+ ENDASSIGNVARIABLE                                             # arnoldAssign
                     | DECLARE ID SETINITIALVALUE expression                                                                # arnoldDeclare
                     ;
 

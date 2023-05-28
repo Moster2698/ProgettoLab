@@ -1,11 +1,11 @@
 import value.ExpValue;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Conf {
 
-    private final Map<String, ExpValue<?>> map = new HashMap<>();
+    private final Map<String, ExpValue<?>> map = new LinkedHashMap<>();
 
     public boolean contains(String id) {
         return map.containsKey(id);
@@ -17,5 +17,9 @@ public class Conf {
 
     public void update(String id, ExpValue<?> v) {
         map.put(id, v);
+    }
+
+    public ExpValue<?> getLast() {
+        return (ExpValue<?>) map.entrySet().toArray()[map.size() -1];
     }
 }

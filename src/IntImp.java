@@ -16,7 +16,7 @@ public class IntImp extends ImpBaseVisitor<Value> {
     private final Conf globalVars;
     private final Set<FunValue> functions = new HashSet<>();
 
-    private final ArnoldConf arnoldConf = new ArnoldConf();
+    private final Conf arnoldConf = new Conf();
 
     public IntImp(Conf conf) {
         this.globalVars = conf;
@@ -91,7 +91,7 @@ public class IntImp extends ImpBaseVisitor<Value> {
         return (ExpValue<?>) visit(ctx);
     }
 
-    private int visitNatExp(ParserRuleContext ctx) {
+    private int visitNatExp(ImpParser.ExpContext ctx) {
         try {
             return ((NatValue) visitExp(ctx)).toJavaValue();
         } catch (ClassCastException e) {
@@ -101,7 +101,26 @@ public class IntImp extends ImpBaseVisitor<Value> {
         return 0; // unreachable code
     }
 
-    private float visitFloatExp(ParserRuleContext ctx) {
+    private boolean visitBoolExp(ImpParser.ExpContext ctx) {
+        try {
+            return ((BoolValue) visitExp(ctx)).toJavaValue();
+        } catch (ClassCastException e) {
+            CastException.castException("Boolean", ctx);
+        }
+        return false; // unreachable code
+    }
+
+    private int visitNatExp(ImpParser.ExpressionContext ctx) {
+        try {
+            return ((NatValue) visitExp(ctx)).toJavaValue();
+        } catch (ClassCastException e) {
+            CastException.castException("Natural", ctx);
+        }
+
+        return 0; // unreachable code
+    }
+
+    private float visitFloatExp(ImpParser.ExpressionContext ctx) {
         try {
             return ((FloatValue) visitExp(ctx)).toJavaValue();
         } catch (ClassCastException e) {
@@ -111,7 +130,7 @@ public class IntImp extends ImpBaseVisitor<Value> {
         return 0F; // unreachable code
     }
 
-    private boolean visitBoolExp(ParserRuleContext ctx) {
+    private boolean visitBoolExp(ImpParser.ExpressionContext ctx) {
         try {
             return ((BoolValue) visitExp(ctx)).toJavaValue();
         } catch (ClassCastException e) {
@@ -120,7 +139,7 @@ public class IntImp extends ImpBaseVisitor<Value> {
         return false; // unreachable code
     }
 
-    private String VisitStringExp(ParserRuleContext ctx){
+    private String VisitStringExp(ImpParser.ExpressionContext ctx){
         try {
             return ((StringValue)visit(ctx)).toJavaValue();
         }
@@ -130,7 +149,6 @@ public class IntImp extends ImpBaseVisitor<Value> {
         return null;
     }
 
-    /***********************************Inizio Comandi***************************************/
     @Override
     public ComValue visitProg(ImpParser.ProgContext ctx) {
         for(ImpParser.FunContext f : ctx.fun())
@@ -291,40 +309,39 @@ public class IntImp extends ImpBaseVisitor<Value> {
     public ComValue visitArnoldIf(ImpParser.ArnoldIfContext ctx) {
         if(visitBoolExp(ctx.expression()))
             return visitArnoldCom(ctx.arnoldCom());
-        return null; //TODO: null?
+        return ComValue.INSTANCE;
     }
 
     @Override
     public ComValue visitArnoldWhile(ImpParser.ArnoldWhileContext ctx) {
         if (!visitBoolExp(ctx.expression()))
             return ComValue.INSTANCE;
-        visitArnoldCom(ctx.arnoldCom());
-
+        for (int i = 0; i < ctx.arnoldCom().size(); i++) {
+            visitArnoldCom(ctx.arnoldCom(i));
+        }
         return visitArnoldWhile(ctx);
     }
 
     @Override
     public ComValue visitArnoldPrintExp(ImpParser.ArnoldPrintExpContext ctx) {
-        String valueToPrint = VisitStringExp(ctx.expression());
-        System.out.println(valueToPrint);
-
+        System.out.println(visitExp(ctx.expression()));
         return ComValue.INSTANCE;
     }
 
     @Override
     public ComValue visitArnoldAssign(ImpParser.ArnoldAssignContext ctx) {
-        String id = ctx.ID().getText();
-        ExpValue<?> v = visitExp((ctx.expression()));
-
-        arnoldConf.update(id, v);
+        for (int i = 0; i < ctx.expression().size(); i++) {
+            globalVars.update(ctx.ID().getText(), visitExp(ctx.expression(i)));
+        }
         return ComValue.INSTANCE;
     }
 
     @Override
     public ComValue visitArnoldDeclare(ImpParser.ArnoldDeclareContext ctx) {
         String id = ctx.ID().getText();
-
-        arnoldConf.update(id, null);
+        /*Assegno un valore vuoto*/
+        ExpValue<?> tmp = new FloatValue((float) 0);
+        arnoldConf.update(id, tmp);
         return ComValue.INSTANCE;
     }
 
@@ -357,44 +374,44 @@ public class IntImp extends ImpBaseVisitor<Value> {
 
     @Override
     public FloatValue visitArnoldPlus(ImpParser.ArnoldPlusContext ctx) {
-        float left = Float.parseFloat(arnoldConf.getLast().toString());
-        float right = visitNatExp(ctx.expression());
+        float left = 0;
+        float right = visitFloatExp(ctx.expression());
+
         return new FloatValue(left + right);
     }
 
     @Override
     public FloatValue visitArnoldMinus(ImpParser.ArnoldMinusContext ctx) {
-        float left = Float.parseFloat(arnoldConf.getLast().toString());
-        float right = visitFloatExp(ctx.expression());
+        float left = 0;
+        float right = 0;
 
-        return new FloatValue(Math.max(left - right, 0));
+        return new FloatValue(left - right);
     }
 
     @Override
     public FloatValue visitArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx) {
-        float left = Float.parseFloat(arnoldConf.getLast().toString());
-        float right = visitFloatExp(ctx.expression());
+        float left = 0;
+        float right = 0;
+
         return new FloatValue(left * right);
     }
 
     @Override
     public FloatValue visitArnoldDivision(ImpParser.ArnoldDivisionContext ctx) {
-        float left = Float.parseFloat(arnoldConf.getLast().toString());
-        float right = visitNatExp(ctx.expression());
-        return new FloatValue(left / right);
+        //TODO
+        return new FloatValue(Float.parseFloat("0"));
     }
 
     @Override
     public BoolValue visitArnoldEqual(ImpParser.ArnoldEqualContext ctx) {
-        ExpValue<?> left = arnoldConf.getLast();
-        ExpValue<?> right = visitExp(ctx.expression());
-        return new BoolValue(left.equals(right));
+        //TODO
+        return new BoolValue(true);
     }
 
     @Override
     public BoolValue visitArnoldGreater(ImpParser.ArnoldGreaterContext ctx) {
-        float left = Float.parseFloat(arnoldConf.getLast().toString());
-        float right = visitNatExp(ctx.expression());
+        float left = 0;
+        float right = 0;
         if (left > right)
             return new BoolValue(true);
         return new BoolValue(false);
@@ -402,17 +419,16 @@ public class IntImp extends ImpBaseVisitor<Value> {
 
     @Override
     public BoolValue visitArnoldOr(ImpParser.ArnoldOrContext ctx) {
-        boolean left = Boolean.parseBoolean(arnoldConf.getLast().toString());
-        boolean right = visitBoolExp(ctx.expression());
+        boolean left = true;
+        boolean right = true;
 
         return new BoolValue(left || right);
     }
 
     @Override
     public BoolValue visitArnoldAnd(ImpParser.ArnoldAndContext ctx) {
-        boolean left = Boolean.parseBoolean(arnoldConf.getLast().toString());
-        boolean right = visitBoolExp(ctx.expression());
-
+        boolean left = true;
+        boolean right = true;
         return new BoolValue(left && right);
     }
 
