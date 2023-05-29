@@ -1,24 +1,19 @@
-fun y(y, k) {
-    f = k;
-    { f = ( ( ( ( ( ( f.g / 2 ) * f ) - ( f - 1 ) ) / ( ( f * 2 ) + 1 ) ) + ( y.g - f ) ) + y ) } nd { f = ( ( ( ( ( ( ( ( ( ( f.g + f.g ) / f ) + ( f - 1 ) ) / f ) - y.g ) * f.g ) - ( ( y.g - f ) * 2 ) ) / ( f * ( ( y.g - f ) * 2 ) ) ) + ( y.g + f ) ) + ( y - f ) ) };
-    return f
-}
+fun AnnaKarenina(){
+	${
+	IT'S SHOWTIME
+	  HEY CHRISTMAS TREE a
+	  YOU SET US UP 0.0
+	  HEY CHRISTMAS TREE b
+	  YOU SET US UP 17.4
+	  GET TO THE CHOPPER a
+	  HERE IS MY INVITATION 4.0
+	  GET UP b
+	  YOU'RE FIRED 2.0
+	  ENOUGH TALK
+	  TALK TO THE HAND a
+	YOU HAVE BEEN TERMINATED
+	}$;
+	return 42
+	}
 
-fun k(k, y) {
-  if (k > 0) then { ret = 0 + k(k - 1, y + 1) }
-  else { ret = y };
-
-  return ret
-}
-
-fun f(y) {
-k = k(k.g, 0);
-y.g = y(y, k);
-return y.g
-}
-
-global k = 4;
-global y = 5;
-global f = 42;
-y = 5;
-{ out(f(y)) } nd { { out(y) } nd { out((y.g - y) + f.g) } }
+out(AnnaKarenina())

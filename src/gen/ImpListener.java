@@ -8,15 +8,15 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface ImpListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link ImpParser#prog}.
+	 * Enter a parse tree produced by {@link ImpParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void enterProg(ImpParser.ProgContext ctx);
+	void enterProgram(ImpParser.ProgramContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ImpParser#prog}.
+	 * Exit a parse tree produced by {@link ImpParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void exitProg(ImpParser.ProgContext ctx);
+	void exitProgram(ImpParser.ProgramContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ImpParser#arnoldIni}.
 	 * @param ctx the parse tree
@@ -28,221 +28,137 @@ public interface ImpListener extends ParseTreeListener {
 	 */
 	void exitArnoldIni(ImpParser.ArnoldIniContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code globalAssign}
-	 * labeled alternative in {@link ImpParser#global}.
+	 * Enter a parse tree produced by the {@code globalAssignValue}
+	 * labeled alternative in {@link ImpParser#globalEnv}.
 	 * @param ctx the parse tree
 	 */
-	void enterGlobalAssign(ImpParser.GlobalAssignContext ctx);
+	void enterGlobalAssignValue(ImpParser.GlobalAssignValueContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code globalAssign}
-	 * labeled alternative in {@link ImpParser#global}.
+	 * Exit a parse tree produced by the {@code globalAssignValue}
+	 * labeled alternative in {@link ImpParser#globalEnv}.
 	 * @param ctx the parse tree
 	 */
-	void exitGlobalAssign(ImpParser.GlobalAssignContext ctx);
+	void exitGlobalAssignValue(ImpParser.GlobalAssignValueContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldIfElse}
+	 * Enter a parse tree produced by the {@code arnoldIfElseCheck}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void enterArnoldIfElse(ImpParser.ArnoldIfElseContext ctx);
+	void enterArnoldIfElseCheck(ImpParser.ArnoldIfElseCheckContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code arnoldIfElse}
+	 * Exit a parse tree produced by the {@code arnoldIfElseCheck}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void exitArnoldIfElse(ImpParser.ArnoldIfElseContext ctx);
+	void exitArnoldIfElseCheck(ImpParser.ArnoldIfElseCheckContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldIf}
+	 * Enter a parse tree produced by the {@code arnoldIfCheck}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void enterArnoldIf(ImpParser.ArnoldIfContext ctx);
+	void enterArnoldIfCheck(ImpParser.ArnoldIfCheckContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code arnoldIf}
+	 * Exit a parse tree produced by the {@code arnoldIfCheck}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void exitArnoldIf(ImpParser.ArnoldIfContext ctx);
+	void exitArnoldIfCheck(ImpParser.ArnoldIfCheckContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldWhile}
+	 * Enter a parse tree produced by the {@code arnoldWhileCycle}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void enterArnoldWhile(ImpParser.ArnoldWhileContext ctx);
+	void enterArnoldWhileCycle(ImpParser.ArnoldWhileCycleContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code arnoldWhile}
+	 * Exit a parse tree produced by the {@code arnoldWhileCycle}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void exitArnoldWhile(ImpParser.ArnoldWhileContext ctx);
+	void exitArnoldWhileCycle(ImpParser.ArnoldWhileCycleContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldPrintExp}
+	 * Enter a parse tree produced by the {@code arnoldPrintExpression}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void enterArnoldPrintExp(ImpParser.ArnoldPrintExpContext ctx);
+	void enterArnoldPrintExpression(ImpParser.ArnoldPrintExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code arnoldPrintExp}
+	 * Exit a parse tree produced by the {@code arnoldPrintExpression}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void exitArnoldPrintExp(ImpParser.ArnoldPrintExpContext ctx);
+	void exitArnoldPrintExpression(ImpParser.ArnoldPrintExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldAssign}
+	 * Enter a parse tree produced by the {@code arnoldAssignValue}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void enterArnoldAssign(ImpParser.ArnoldAssignContext ctx);
+	void enterArnoldAssignValue(ImpParser.ArnoldAssignValueContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code arnoldAssign}
+	 * Exit a parse tree produced by the {@code arnoldAssignValue}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void exitArnoldAssign(ImpParser.ArnoldAssignContext ctx);
+	void exitArnoldAssignValue(ImpParser.ArnoldAssignValueContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldDeclare}
+	 * Enter a parse tree produced by the {@code arnoldDeclareVariable}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void enterArnoldDeclare(ImpParser.ArnoldDeclareContext ctx);
+	void enterArnoldDeclareVariable(ImpParser.ArnoldDeclareVariableContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code arnoldDeclare}
+	 * Exit a parse tree produced by the {@code arnoldDeclareVariable}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
 	 */
-	void exitArnoldDeclare(ImpParser.ArnoldDeclareContext ctx);
+	void exitArnoldDeclareVariable(ImpParser.ArnoldDeclareVariableContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldPlus}
+	 * Enter a parse tree produced by the {@code arnoldOp}
 	 * labeled alternative in {@link ImpParser#arnoldOperations}.
 	 * @param ctx the parse tree
 	 */
-	void enterArnoldPlus(ImpParser.ArnoldPlusContext ctx);
+	void enterArnoldOp(ImpParser.ArnoldOpContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code arnoldPlus}
+	 * Exit a parse tree produced by the {@code arnoldOp}
 	 * labeled alternative in {@link ImpParser#arnoldOperations}.
 	 * @param ctx the parse tree
 	 */
-	void exitArnoldPlus(ImpParser.ArnoldPlusContext ctx);
+	void exitArnoldOp(ImpParser.ArnoldOpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldMinus}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldMinus(ImpParser.ArnoldMinusContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldMinus}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldMinus(ImpParser.ArnoldMinusContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arnoldMultiplication}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldMultiplication}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arnoldDivision}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldDivision(ImpParser.ArnoldDivisionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldDivision}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldDivision(ImpParser.ArnoldDivisionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arnoldEqual}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldEqual(ImpParser.ArnoldEqualContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldEqual}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldEqual(ImpParser.ArnoldEqualContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arnoldGreater}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldGreater(ImpParser.ArnoldGreaterContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldGreater}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldGreater(ImpParser.ArnoldGreaterContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arnoldOr}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldOr(ImpParser.ArnoldOrContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldOr}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldOr(ImpParser.ArnoldOrContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arnoldAnd}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldAnd(ImpParser.ArnoldAndContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldAnd}
-	 * labeled alternative in {@link ImpParser#arnoldOperations}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldAnd(ImpParser.ArnoldAndContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arnoldIdexpr}
+	 * Enter a parse tree produced by the {@code arnoldIdExp}
 	 * labeled alternative in {@link ImpParser#operand}.
 	 * @param ctx the parse tree
 	 */
-	void enterArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx);
+	void enterArnoldIdExp(ImpParser.ArnoldIdExpContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code arnoldIdexpr}
+	 * Exit a parse tree produced by the {@code arnoldIdExp}
 	 * labeled alternative in {@link ImpParser#operand}.
 	 * @param ctx the parse tree
 	 */
-	void exitArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx);
+	void exitArnoldIdExp(ImpParser.ArnoldIdExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldString}
+	 * Enter a parse tree produced by the {@code arnoldStringExp}
 	 * labeled alternative in {@link ImpParser#operand}.
 	 * @param ctx the parse tree
 	 */
-	void enterArnoldString(ImpParser.ArnoldStringContext ctx);
+	void enterArnoldStringExp(ImpParser.ArnoldStringExpContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code arnoldString}
+	 * Exit a parse tree produced by the {@code arnoldStringExp}
 	 * labeled alternative in {@link ImpParser#operand}.
 	 * @param ctx the parse tree
 	 */
-	void exitArnoldString(ImpParser.ArnoldStringContext ctx);
+	void exitArnoldStringExp(ImpParser.ArnoldStringExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldNumberexpr}
+	 * Enter a parse tree produced by the {@code arnoldNumberExp}
 	 * labeled alternative in {@link ImpParser#operand}.
 	 * @param ctx the parse tree
 	 */
-	void enterArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx);
+	void enterArnoldNumberExp(ImpParser.ArnoldNumberExpContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code arnoldNumberexpr}
+	 * Exit a parse tree produced by the {@code arnoldNumberExp}
 	 * labeled alternative in {@link ImpParser#operand}.
 	 * @param ctx the parse tree
 	 */
-	void exitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx);
+	void exitArnoldNumberExp(ImpParser.ArnoldNumberExpContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code arnoldBoolExp}
 	 * labeled alternative in {@link ImpParser#operand}.

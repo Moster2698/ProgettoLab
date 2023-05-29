@@ -19,7 +19,7 @@ public class Main {
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         ImpParser parser = new ImpParser(tokenStream);
 
-        ParseTree tree = parser.prog();
+        ParseTree tree = parser.program();
 
         IntImp interpreter = new IntImp(new Conf());
         interpreter.visit(tree);

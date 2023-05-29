@@ -1,47 +1,50 @@
 grammar Imp;
-prog : (fun)* global*  com EOF ;
-arnoldIni           : ARNOLDSTARTMAIN arnoldCom* ARNOLDENDMAIN;
-global: GLOBAL ID ASSIGN exp SEMICOLON                                                                     # globalAssign;
-arnoldCom           : ARNOLDIF operand arnoldCom ARNOLDELSE arnoldCom ARNOLDENDIF                          # arnoldIfElse
-                    | ARNOLDIF operand arnoldCom ARNOLDENDIF                                               # arnoldIf
-                    | ARNOLDWHILE operand arnoldCom+ ARNOLDENDWHILE                                        # arnoldWhile
-                    | ARNOLDPRINT (STRING | ID)                                                            # arnoldPrintExp
-                    | ARNOLDASSIGNVARIABLE ID ARNOLDSETVALUE operand arnoldOperations+ ARNOLDENDASSIGNVARIABLE   # arnoldAssign
-                    | ARNOLDDECLARE ID ARNOLDSETINITIALVALUE operand                                       # arnoldDeclare
+program             : (fun)* globalEnv*  com EOF
+                    ;
+arnoldIni           : ARNOLDSTARTMAIN arnoldCom* ARNOLDENDMAIN
+                    ;
+globalEnv           : GLOBAL ID ASSIGN exp SEMICOLON                                                            # globalAssignValue
+                    ;
+arnoldCom           : ARNOLDIF operand arnoldCom ARNOLDELSE arnoldCom ARNOLDENDIF                               # arnoldIfElseCheck
+                    | ARNOLDIF operand arnoldCom ARNOLDENDIF                                                    # arnoldIfCheck
+                    | ARNOLDWHILE operand arnoldCom+ ARNOLDENDWHILE                                             # arnoldWhileCycle
+                    | ARNOLDPRINT (STRING | ID)                                                                 # arnoldPrintExpression
+                    | ARNOLDASSIGNVARIABLE ID ARNOLDSETVALUE operand arnoldOperations+ ARNOLDENDASSIGNVARIABLE  # arnoldAssignValue
+                    | ARNOLDDECLARE ID ARNOLDSETINITIALVALUE operand                                            # arnoldDeclareVariable
                     ;
 
-arnoldOperations    : ARNOLDPLUSOPERATOR operand           # arnoldPlus
-                    | ARNOLDMINUSOPERATOR operand          # arnoldMinus
-                    | ARNOLDMULTIPLICATIONOPERATOR operand # arnoldMultiplication
-                    | ARNOLDDIVISIONOPERATOR operand       # arnoldDivision
-                    | ARNOLDEQUALTO operand                # arnoldEqual
-                    | ARNOLDGREATERTHAN operand            # arnoldGreater
-                    | ARNOLDOR operand                     # arnoldOr
-                    | ARNOLDAND operand                    # arnoldAnd
-                    ;
+arnoldOperations    : arnoldOperation=(
+                        ARNOLDPLUSOPERATOR
+                       | ARNOLDMINUSOPERATOR
+                       | ARNOLDMULTIPLICATIONOPERATOR
+                       | ARNOLDDIVISIONOPERATOR
+                       | ARNOLDEQUALTO
+                       | ARNOLDGREATERTHAN
+                       | ARNOLDOR
+                       | ARNOLDAND) operand                    # arnoldOp
+                       ;
 
-operand             : ID                          # arnoldIdexpr
-                    | ARNOLDSTRING                      # arnoldString
-                    | ARNOLDFLOAT                       # arnoldNumberexpr
+
+operand             : ID                                # arnoldIdExp
+                    | STRING                            # arnoldStringExp
+                    | ARNOLDFLOAT                       # arnoldNumberExp
                     | ARNOLDAT ARNOLDBOOL               # arnoldBoolExp
                     ;
-ARNOLDSTARTMAIN           : 'IT\'S SHOWTIME';
+ARNOLDSTARTMAIN               : 'IT\'S SHOWTIME';
 
-ARNOLDENDMAIN             : 'YOU HAVE BEEN TERMINATED';
+ARNOLDENDMAIN                 : 'YOU HAVE BEEN TERMINATED';
 
-ARNOLDAT                  : '@';
+ARNOLDAT                      : '@';
 
-ARNOLDBOOL                : ARNOLDTRUE
-                          | ARNOLDFALSE
-                          ;
+ARNOLDBOOL                    : ARNOLDTRUE | ARNOLDFALSE ;
 
-ARNOLDTRUE                : 'NO PROBLEMO';
+ARNOLDTRUE                    : 'NO PROBLEMO';
 
-ARNOLDFALSE               : 'I LIED';
+ARNOLDFALSE                   : 'I LIED';
 
-ARNOLDPLUSOPERATOR        : 'GET UP';
+ARNOLDPLUSOPERATOR            : 'GET UP';
 
-ARNOLDMINUSOPERATOR       : 'GET DOWN';
+ARNOLDMINUSOPERATOR           : 'GET DOWN';
 
 ARNOLDMULTIPLICATIONOPERATOR  : 'YOU\'RE FIRED';
 
@@ -49,63 +52,35 @@ ARNOLDDIVISIONOPERATOR        : 'HE HAD TO SPLIT';
 
 ARNOLDEQUALTO                 : 'YOU ARE NOT YOU YOU ARE ME';
 
-ARNOLDGREATERTHAN
-    : 'LET OFF SOME STEAM BENNET'
-    ;
+ARNOLDGREATERTHAN             : 'LET OFF SOME STEAM BENNET';
 
-ARNOLDOR
-    : 'CONSIDER THAT A DIVORCE'
-    ;
+ARNOLDOR                      : 'CONSIDER THAT A DIVORCE' ;
 
-ARNOLDAND
-    : 'KNOCK KNOCK'
-    ;
+ARNOLDAND                     : 'KNOCK KNOCK' ;
 
-ARNOLDPRINT
-    : 'TALK TO THE HAND'
-    ;
+ARNOLDPRINT                   : 'TALK TO THE HAND' ;
 
-ARNOLDDECLARE
-    : 'HEY CHRISTMAS TREE'
-    ;
+ARNOLDDECLARE                 : 'HEY CHRISTMAS TREE' ;
 
-ARNOLDSETINITIALVALUE
-    : 'YOU SET US UP'
-    ;
+ARNOLDSETINITIALVALUE         : 'YOU SET US UP' ;
 
-ARNOLDASSIGNVARIABLE
-    : 'GET TO THE CHOPPER'
-    ;
+ARNOLDASSIGNVARIABLE          : 'GET TO THE CHOPPER' ;
 
-ARNOLDSETVALUE
-    : 'HERE IS MY INVITATION'
-    ;
+ARNOLDSETVALUE                : 'HERE IS MY INVITATION' ;
 
-ARNOLDENDASSIGNVARIABLE
-    : 'ENOUGH TALK'
-    ;
+ARNOLDENDASSIGNVARIABLE       : 'ENOUGH TALK' ;
 
-ARNOLDIF
-    : 'BECAUSE I\'M GOING TO SAY PLEASE'
-    ;
+ARNOLDIF                      : 'BECAUSE I\'M GOING TO SAY PLEASE' ;
 
-ARNOLDELSE
-    : 'BULLSHIT'
-    ;
+ARNOLDELSE                    : 'BULLSHIT' ;
 
-ARNOLDENDIF
-    : 'YOU HAVE NO RESPECT FOR LOGIC'
-    ;
+ARNOLDENDIF                   : 'YOU HAVE NO RESPECT FOR LOGIC' ;
 
-ARNOLDWHILE
-    : 'STICK AROUND'
-    ;
+ARNOLDWHILE                   : 'STICK AROUND' ;
 
-ARNOLDENDWHILE
-    : 'CHILL'
-    ;
+ARNOLDENDWHILE                : 'CHILL' ;
 
-
+/*fun section*/
 fun : FUN ID LPAR (ID (COMMA ID)*)* RPAR LBRACE (com SEMICOLON)? RETURN exp RBRACE
     ;
 com : IF LPAR exp RPAR THEN LBRACE com RBRACE ELSE LBRACE com RBRACE    # if
@@ -177,21 +152,21 @@ SEMICOLON : ';' ;
 DOTG      : '.g';
 ND        : 'nd';
 DOLLAR    : '$';
+
+
 ID  : [a-zA-Z0-9]+;
 WS : [ \t\r\n]+ -> skip ;
-
-
-ARNOLDSTRING : '"' STRCHAR* '"';
 STRING : '"' STRCHAR* '"';
 
+/*fragments section*/
 fragment STRCHAR : ~["\\] | ESC;
 fragment ESC : '\\' [btnfr"'\\];
 
-ARNOLDFLOAT                : ARNOLDINT   |   (ARNOLDINT | '-''0')'.'ARNOLDDIGIT+   ;
-fragment ARNOLDINT         :ARNOLDNAT    |   '-'ARNOLDPOS;
-fragment ARNOLDNAT         :'0'    |   ARNOLDPOS;
-fragment ARNOLDPOS         :ARNOLDPOSDIGIT ARNOLDDIGIT*;
-fragment ARNOLDDIGIT       :   '0' |   ARNOLDPOSDIGIT;
-fragment ARNOLDPOSDIGIT    :   [1-9];
+ARNOLDFLOAT                : ARNOLDINT  |   (ARNOLDINT | '-''0')'.'ARNOLDDIGIT+   ;
+fragment ARNOLDINT         : ARNOLDNAT  |   '-'ARNOLDPOS;
+fragment ARNOLDNAT         : '0'        |   ARNOLDPOS;
+fragment ARNOLDPOS         : ARNOLDPOSDIGIT ARNOLDDIGIT*;
+fragment ARNOLDDIGIT       : '0'        |   ARNOLDPOSDIGIT;
+fragment ARNOLDPOSDIGIT    : [1-9];
 
 

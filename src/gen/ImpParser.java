@@ -27,15 +27,15 @@ public class ImpParser extends Parser {
 		OR=35, EQQ=36, NEQ=37, LEQ=38, GEQ=39, LT=40, GT=41, NOT=42, IF=43, THEN=44, 
 		ELSE=45, WHILE=46, SKIPP=47, ASSIGN=48, OUT=49, FUN=50, RETURN=51, GLOBAL=52, 
 		LPAR=53, RPAR=54, LBRACE=55, RBRACE=56, COMMA=57, SEMICOLON=58, DOTG=59, 
-		ND=60, DOLLAR=61, ID=62, WS=63, ARNOLDSTRING=64, STRING=65, ARNOLDFLOAT=66;
+		ND=60, DOLLAR=61, ID=62, WS=63, STRING=64, ARNOLDFLOAT=65;
 	public static final int
-		RULE_prog = 0, RULE_arnoldIni = 1, RULE_global = 2, RULE_arnoldCom = 3, 
+		RULE_program = 0, RULE_arnoldIni = 1, RULE_globalEnv = 2, RULE_arnoldCom = 3, 
 		RULE_arnoldOperations = 4, RULE_operand = 5, RULE_fun = 6, RULE_com = 7, 
 		RULE_exp = 8;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"prog", "arnoldIni", "global", "arnoldCom", "arnoldOperations", "operand", 
-			"fun", "com", "exp"
+			"program", "arnoldIni", "globalEnv", "arnoldCom", "arnoldOperations", 
+			"operand", "fun", "com", "exp"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -67,7 +67,7 @@ public class ImpParser extends Parser {
 			"EQQ", "NEQ", "LEQ", "GEQ", "LT", "GT", "NOT", "IF", "THEN", "ELSE", 
 			"WHILE", "SKIPP", "ASSIGN", "OUT", "FUN", "RETURN", "GLOBAL", "LPAR", 
 			"RPAR", "LBRACE", "RBRACE", "COMMA", "SEMICOLON", "DOTG", "ND", "DOLLAR", 
-			"ID", "WS", "ARNOLDSTRING", "STRING", "ARNOLDFLOAT"
+			"ID", "WS", "STRING", "ARNOLDFLOAT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -122,7 +122,7 @@ public class ImpParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class ProgContext extends ParserRuleContext {
+	public static class ProgramContext extends ParserRuleContext {
 		public ComContext com() {
 			return getRuleContext(ComContext.class,0);
 		}
@@ -133,34 +133,34 @@ public class ImpParser extends Parser {
 		public FunContext fun(int i) {
 			return getRuleContext(FunContext.class,i);
 		}
-		public List<GlobalContext> global() {
-			return getRuleContexts(GlobalContext.class);
+		public List<GlobalEnvContext> globalEnv() {
+			return getRuleContexts(GlobalEnvContext.class);
 		}
-		public GlobalContext global(int i) {
-			return getRuleContext(GlobalContext.class,i);
+		public GlobalEnvContext globalEnv(int i) {
+			return getRuleContext(GlobalEnvContext.class,i);
 		}
-		public ProgContext(ParserRuleContext parent, int invokingState) {
+		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_prog; }
+		@Override public int getRuleIndex() { return RULE_program; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterProg(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterProgram(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitProg(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitProgram(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitProg(this);
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitProgram(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final ProgContext prog() throws RecognitionException {
-		ProgContext _localctx = new ProgContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_prog);
+	public final ProgramContext program() throws RecognitionException {
+		ProgramContext _localctx = new ProgramContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_program);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -186,7 +186,7 @@ public class ImpParser extends Parser {
 				{
 				{
 				setState(24);
-				global();
+				globalEnv();
 				}
 				}
 				setState(29);
@@ -278,19 +278,19 @@ public class ImpParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class GlobalContext extends ParserRuleContext {
-		public GlobalContext(ParserRuleContext parent, int invokingState) {
+	public static class GlobalEnvContext extends ParserRuleContext {
+		public GlobalEnvContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_global; }
+		@Override public int getRuleIndex() { return RULE_globalEnv; }
 	 
-		public GlobalContext() { }
-		public void copyFrom(GlobalContext ctx) {
+		public GlobalEnvContext() { }
+		public void copyFrom(GlobalEnvContext ctx) {
 			super.copyFrom(ctx);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class GlobalAssignContext extends GlobalContext {
+	public static class GlobalAssignValueContext extends GlobalEnvContext {
 		public TerminalNode GLOBAL() { return getToken(ImpParser.GLOBAL, 0); }
 		public TerminalNode ID() { return getToken(ImpParser.ID, 0); }
 		public TerminalNode ASSIGN() { return getToken(ImpParser.ASSIGN, 0); }
@@ -298,27 +298,27 @@ public class ImpParser extends Parser {
 			return getRuleContext(ExpContext.class,0);
 		}
 		public TerminalNode SEMICOLON() { return getToken(ImpParser.SEMICOLON, 0); }
-		public GlobalAssignContext(GlobalContext ctx) { copyFrom(ctx); }
+		public GlobalAssignValueContext(GlobalEnvContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterGlobalAssign(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterGlobalAssignValue(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitGlobalAssign(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitGlobalAssignValue(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitGlobalAssign(this);
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitGlobalAssignValue(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final GlobalContext global() throws RecognitionException {
-		GlobalContext _localctx = new GlobalContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_global);
+	public final GlobalEnvContext globalEnv() throws RecognitionException {
+		GlobalEnvContext _localctx = new GlobalEnvContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_globalEnv);
 		try {
-			_localctx = new GlobalAssignContext(_localctx);
+			_localctx = new GlobalAssignValueContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(42);
@@ -357,36 +357,7 @@ public class ImpParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldIfElseContext extends ArnoldComContext {
-		public TerminalNode ARNOLDIF() { return getToken(ImpParser.ARNOLDIF, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public List<ArnoldComContext> arnoldCom() {
-			return getRuleContexts(ArnoldComContext.class);
-		}
-		public ArnoldComContext arnoldCom(int i) {
-			return getRuleContext(ArnoldComContext.class,i);
-		}
-		public TerminalNode ARNOLDELSE() { return getToken(ImpParser.ARNOLDELSE, 0); }
-		public TerminalNode ARNOLDENDIF() { return getToken(ImpParser.ARNOLDENDIF, 0); }
-		public ArnoldIfElseContext(ArnoldComContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldIfElse(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldIfElse(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldIfElse(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldWhileContext extends ArnoldComContext {
+	public static class ArnoldWhileCycleContext extends ArnoldComContext {
 		public TerminalNode ARNOLDWHILE() { return getToken(ImpParser.ARNOLDWHILE, 0); }
 		public OperandContext operand() {
 			return getRuleContext(OperandContext.class,0);
@@ -398,91 +369,23 @@ public class ImpParser extends Parser {
 		public ArnoldComContext arnoldCom(int i) {
 			return getRuleContext(ArnoldComContext.class,i);
 		}
-		public ArnoldWhileContext(ArnoldComContext ctx) { copyFrom(ctx); }
+		public ArnoldWhileCycleContext(ArnoldComContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldWhile(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldWhileCycle(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldWhile(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldWhileCycle(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldWhile(this);
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldWhileCycle(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldPrintExpContext extends ArnoldComContext {
-		public TerminalNode ARNOLDPRINT() { return getToken(ImpParser.ARNOLDPRINT, 0); }
-		public TerminalNode STRING() { return getToken(ImpParser.STRING, 0); }
-		public TerminalNode ID() { return getToken(ImpParser.ID, 0); }
-		public ArnoldPrintExpContext(ArnoldComContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldPrintExp(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldPrintExp(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldPrintExp(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldDeclareContext extends ArnoldComContext {
-		public TerminalNode ARNOLDDECLARE() { return getToken(ImpParser.ARNOLDDECLARE, 0); }
-		public TerminalNode ID() { return getToken(ImpParser.ID, 0); }
-		public TerminalNode ARNOLDSETINITIALVALUE() { return getToken(ImpParser.ARNOLDSETINITIALVALUE, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public ArnoldDeclareContext(ArnoldComContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldDeclare(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldDeclare(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldDeclare(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldIfContext extends ArnoldComContext {
-		public TerminalNode ARNOLDIF() { return getToken(ImpParser.ARNOLDIF, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public ArnoldComContext arnoldCom() {
-			return getRuleContext(ArnoldComContext.class,0);
-		}
-		public TerminalNode ARNOLDENDIF() { return getToken(ImpParser.ARNOLDENDIF, 0); }
-		public ArnoldIfContext(ArnoldComContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldIf(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldIf(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldIf(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldAssignContext extends ArnoldComContext {
+	public static class ArnoldAssignValueContext extends ArnoldComContext {
 		public TerminalNode ARNOLDASSIGNVARIABLE() { return getToken(ImpParser.ARNOLDASSIGNVARIABLE, 0); }
 		public TerminalNode ID() { return getToken(ImpParser.ID, 0); }
 		public TerminalNode ARNOLDSETVALUE() { return getToken(ImpParser.ARNOLDSETVALUE, 0); }
@@ -496,18 +399,115 @@ public class ImpParser extends Parser {
 		public ArnoldOperationsContext arnoldOperations(int i) {
 			return getRuleContext(ArnoldOperationsContext.class,i);
 		}
-		public ArnoldAssignContext(ArnoldComContext ctx) { copyFrom(ctx); }
+		public ArnoldAssignValueContext(ArnoldComContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldAssign(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldAssignValue(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldAssign(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldAssignValue(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldAssign(this);
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldAssignValue(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArnoldPrintExpressionContext extends ArnoldComContext {
+		public TerminalNode ARNOLDPRINT() { return getToken(ImpParser.ARNOLDPRINT, 0); }
+		public TerminalNode STRING() { return getToken(ImpParser.STRING, 0); }
+		public TerminalNode ID() { return getToken(ImpParser.ID, 0); }
+		public ArnoldPrintExpressionContext(ArnoldComContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldPrintExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldPrintExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldPrintExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArnoldIfElseCheckContext extends ArnoldComContext {
+		public TerminalNode ARNOLDIF() { return getToken(ImpParser.ARNOLDIF, 0); }
+		public OperandContext operand() {
+			return getRuleContext(OperandContext.class,0);
+		}
+		public List<ArnoldComContext> arnoldCom() {
+			return getRuleContexts(ArnoldComContext.class);
+		}
+		public ArnoldComContext arnoldCom(int i) {
+			return getRuleContext(ArnoldComContext.class,i);
+		}
+		public TerminalNode ARNOLDELSE() { return getToken(ImpParser.ARNOLDELSE, 0); }
+		public TerminalNode ARNOLDENDIF() { return getToken(ImpParser.ARNOLDENDIF, 0); }
+		public ArnoldIfElseCheckContext(ArnoldComContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldIfElseCheck(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldIfElseCheck(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldIfElseCheck(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArnoldIfCheckContext extends ArnoldComContext {
+		public TerminalNode ARNOLDIF() { return getToken(ImpParser.ARNOLDIF, 0); }
+		public OperandContext operand() {
+			return getRuleContext(OperandContext.class,0);
+		}
+		public ArnoldComContext arnoldCom() {
+			return getRuleContext(ArnoldComContext.class,0);
+		}
+		public TerminalNode ARNOLDENDIF() { return getToken(ImpParser.ARNOLDENDIF, 0); }
+		public ArnoldIfCheckContext(ArnoldComContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldIfCheck(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldIfCheck(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldIfCheck(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArnoldDeclareVariableContext extends ArnoldComContext {
+		public TerminalNode ARNOLDDECLARE() { return getToken(ImpParser.ARNOLDDECLARE, 0); }
+		public TerminalNode ID() { return getToken(ImpParser.ID, 0); }
+		public TerminalNode ARNOLDSETINITIALVALUE() { return getToken(ImpParser.ARNOLDSETINITIALVALUE, 0); }
+		public OperandContext operand() {
+			return getRuleContext(OperandContext.class,0);
+		}
+		public ArnoldDeclareVariableContext(ArnoldComContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldDeclareVariable(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldDeclareVariable(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldDeclareVariable(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -521,7 +521,7 @@ public class ImpParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
-				_localctx = new ArnoldIfElseContext(_localctx);
+				_localctx = new ArnoldIfElseCheckContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(48);
@@ -539,7 +539,7 @@ public class ImpParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new ArnoldIfContext(_localctx);
+				_localctx = new ArnoldIfCheckContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(55);
@@ -553,7 +553,7 @@ public class ImpParser extends Parser {
 				}
 				break;
 			case 3:
-				_localctx = new ArnoldWhileContext(_localctx);
+				_localctx = new ArnoldWhileCycleContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(60);
@@ -579,7 +579,7 @@ public class ImpParser extends Parser {
 				}
 				break;
 			case 4:
-				_localctx = new ArnoldPrintExpContext(_localctx);
+				_localctx = new ArnoldPrintExpressionContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(69);
@@ -597,7 +597,7 @@ public class ImpParser extends Parser {
 				}
 				break;
 			case 5:
-				_localctx = new ArnoldAssignContext(_localctx);
+				_localctx = new ArnoldAssignValueContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(71);
@@ -627,7 +627,7 @@ public class ImpParser extends Parser {
 				}
 				break;
 			case 6:
-				_localctx = new ArnoldDeclareContext(_localctx);
+				_localctx = new ArnoldDeclareVariableContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(82);
@@ -666,170 +666,31 @@ public class ImpParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldPlusContext extends ArnoldOperationsContext {
+	public static class ArnoldOpContext extends ArnoldOperationsContext {
+		public Token arnoldOperation;
+		public OperandContext operand() {
+			return getRuleContext(OperandContext.class,0);
+		}
 		public TerminalNode ARNOLDPLUSOPERATOR() { return getToken(ImpParser.ARNOLDPLUSOPERATOR, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public ArnoldPlusContext(ArnoldOperationsContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldPlus(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldPlus(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldPlus(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldOrContext extends ArnoldOperationsContext {
-		public TerminalNode ARNOLDOR() { return getToken(ImpParser.ARNOLDOR, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public ArnoldOrContext(ArnoldOperationsContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldOr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldOr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldOr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldGreaterContext extends ArnoldOperationsContext {
-		public TerminalNode ARNOLDGREATERTHAN() { return getToken(ImpParser.ARNOLDGREATERTHAN, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public ArnoldGreaterContext(ArnoldOperationsContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldGreater(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldGreater(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldGreater(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldAndContext extends ArnoldOperationsContext {
-		public TerminalNode ARNOLDAND() { return getToken(ImpParser.ARNOLDAND, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public ArnoldAndContext(ArnoldOperationsContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldAnd(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldAnd(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldAnd(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldEqualContext extends ArnoldOperationsContext {
-		public TerminalNode ARNOLDEQUALTO() { return getToken(ImpParser.ARNOLDEQUALTO, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public ArnoldEqualContext(ArnoldOperationsContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldEqual(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldEqual(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldEqual(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldDivisionContext extends ArnoldOperationsContext {
-		public TerminalNode ARNOLDDIVISIONOPERATOR() { return getToken(ImpParser.ARNOLDDIVISIONOPERATOR, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public ArnoldDivisionContext(ArnoldOperationsContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldDivision(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldDivision(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldDivision(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldMultiplicationContext extends ArnoldOperationsContext {
-		public TerminalNode ARNOLDMULTIPLICATIONOPERATOR() { return getToken(ImpParser.ARNOLDMULTIPLICATIONOPERATOR, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public ArnoldMultiplicationContext(ArnoldOperationsContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldMultiplication(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldMultiplication(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldMultiplication(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldMinusContext extends ArnoldOperationsContext {
 		public TerminalNode ARNOLDMINUSOPERATOR() { return getToken(ImpParser.ARNOLDMINUSOPERATOR, 0); }
-		public OperandContext operand() {
-			return getRuleContext(OperandContext.class,0);
-		}
-		public ArnoldMinusContext(ArnoldOperationsContext ctx) { copyFrom(ctx); }
+		public TerminalNode ARNOLDMULTIPLICATIONOPERATOR() { return getToken(ImpParser.ARNOLDMULTIPLICATIONOPERATOR, 0); }
+		public TerminalNode ARNOLDDIVISIONOPERATOR() { return getToken(ImpParser.ARNOLDDIVISIONOPERATOR, 0); }
+		public TerminalNode ARNOLDEQUALTO() { return getToken(ImpParser.ARNOLDEQUALTO, 0); }
+		public TerminalNode ARNOLDGREATERTHAN() { return getToken(ImpParser.ARNOLDGREATERTHAN, 0); }
+		public TerminalNode ARNOLDOR() { return getToken(ImpParser.ARNOLDOR, 0); }
+		public TerminalNode ARNOLDAND() { return getToken(ImpParser.ARNOLDAND, 0); }
+		public ArnoldOpContext(ArnoldOperationsContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldMinus(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldOp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldMinus(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldOp(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldMinus(this);
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldOp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -837,92 +698,24 @@ public class ImpParser extends Parser {
 	public final ArnoldOperationsContext arnoldOperations() throws RecognitionException {
 		ArnoldOperationsContext _localctx = new ArnoldOperationsContext(_ctx, getState());
 		enterRule(_localctx, 8, RULE_arnoldOperations);
+		int _la;
 		try {
-			setState(104);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case ARNOLDPLUSOPERATOR:
-				_localctx = new ArnoldPlusContext(_localctx);
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(88);
-				match(ARNOLDPLUSOPERATOR);
-				setState(89);
-				operand();
-				}
-				break;
-			case ARNOLDMINUSOPERATOR:
-				_localctx = new ArnoldMinusContext(_localctx);
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(90);
-				match(ARNOLDMINUSOPERATOR);
-				setState(91);
-				operand();
-				}
-				break;
-			case ARNOLDMULTIPLICATIONOPERATOR:
-				_localctx = new ArnoldMultiplicationContext(_localctx);
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(92);
-				match(ARNOLDMULTIPLICATIONOPERATOR);
-				setState(93);
-				operand();
-				}
-				break;
-			case ARNOLDDIVISIONOPERATOR:
-				_localctx = new ArnoldDivisionContext(_localctx);
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(94);
-				match(ARNOLDDIVISIONOPERATOR);
-				setState(95);
-				operand();
-				}
-				break;
-			case ARNOLDEQUALTO:
-				_localctx = new ArnoldEqualContext(_localctx);
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(96);
-				match(ARNOLDEQUALTO);
-				setState(97);
-				operand();
-				}
-				break;
-			case ARNOLDGREATERTHAN:
-				_localctx = new ArnoldGreaterContext(_localctx);
-				enterOuterAlt(_localctx, 6);
-				{
-				setState(98);
-				match(ARNOLDGREATERTHAN);
-				setState(99);
-				operand();
-				}
-				break;
-			case ARNOLDOR:
-				_localctx = new ArnoldOrContext(_localctx);
-				enterOuterAlt(_localctx, 7);
-				{
-				setState(100);
-				match(ARNOLDOR);
-				setState(101);
-				operand();
-				}
-				break;
-			case ARNOLDAND:
-				_localctx = new ArnoldAndContext(_localctx);
-				enterOuterAlt(_localctx, 8);
-				{
-				setState(102);
-				match(ARNOLDAND);
-				setState(103);
-				operand();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			_localctx = new ArnoldOpContext(_localctx);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(88);
+			((ArnoldOpContext)_localctx).arnoldOperation = _input.LT(1);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 32640L) != 0)) ) {
+				((ArnoldOpContext)_localctx).arnoldOperation = (Token)_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			setState(89);
+			operand();
 			}
 		}
 		catch (RecognitionException re) {
@@ -949,56 +742,38 @@ public class ImpParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldNumberexprContext extends OperandContext {
+	public static class ArnoldNumberExpContext extends OperandContext {
 		public TerminalNode ARNOLDFLOAT() { return getToken(ImpParser.ARNOLDFLOAT, 0); }
-		public ArnoldNumberexprContext(OperandContext ctx) { copyFrom(ctx); }
+		public ArnoldNumberExpContext(OperandContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldNumberexpr(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldNumberExp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldNumberexpr(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldNumberExp(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldNumberexpr(this);
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldNumberExp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldStringContext extends OperandContext {
-		public TerminalNode ARNOLDSTRING() { return getToken(ImpParser.ARNOLDSTRING, 0); }
-		public ArnoldStringContext(OperandContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldString(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldString(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldString(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArnoldIdexprContext extends OperandContext {
+	public static class ArnoldIdExpContext extends OperandContext {
 		public TerminalNode ID() { return getToken(ImpParser.ID, 0); }
-		public ArnoldIdexprContext(OperandContext ctx) { copyFrom(ctx); }
+		public ArnoldIdExpContext(OperandContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldIdexpr(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldIdExp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldIdexpr(this);
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldIdExp(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldIdexpr(this);
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldIdExp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1021,35 +796,53 @@ public class ImpParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArnoldStringExpContext extends OperandContext {
+		public TerminalNode STRING() { return getToken(ImpParser.STRING, 0); }
+		public ArnoldStringExpContext(OperandContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).enterArnoldStringExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ImpListener ) ((ImpListener)listener).exitArnoldStringExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ImpVisitor ) return ((ImpVisitor<? extends T>)visitor).visitArnoldStringExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final OperandContext operand() throws RecognitionException {
 		OperandContext _localctx = new OperandContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_operand);
 		try {
-			setState(111);
+			setState(96);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case ID:
-				_localctx = new ArnoldIdexprContext(_localctx);
+				_localctx = new ArnoldIdExpContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(106);
+				setState(91);
 				match(ID);
 				}
 				break;
-			case ARNOLDSTRING:
-				_localctx = new ArnoldStringContext(_localctx);
+			case STRING:
+				_localctx = new ArnoldStringExpContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(107);
-				match(ARNOLDSTRING);
+				setState(92);
+				match(STRING);
 				}
 				break;
 			case ARNOLDFLOAT:
-				_localctx = new ArnoldNumberexprContext(_localctx);
+				_localctx = new ArnoldNumberExpContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(108);
+				setState(93);
 				match(ARNOLDFLOAT);
 				}
 				break;
@@ -1057,9 +850,9 @@ public class ImpParser extends Parser {
 				_localctx = new ArnoldBoolExpContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(109);
+				setState(94);
 				match(ARNOLDAT);
-				setState(110);
+				setState(95);
 				match(ARNOLDBOOL);
 				}
 				break;
@@ -1127,63 +920,63 @@ public class ImpParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(113);
+			setState(98);
 			match(FUN);
-			setState(114);
+			setState(99);
 			match(ID);
-			setState(115);
+			setState(100);
 			match(LPAR);
-			setState(126);
+			setState(111);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==ID) {
 				{
 				{
-				setState(116);
+				setState(101);
 				match(ID);
-				setState(121);
+				setState(106);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==COMMA) {
 					{
 					{
-					setState(117);
+					setState(102);
 					match(COMMA);
-					setState(118);
+					setState(103);
 					match(ID);
 					}
 					}
-					setState(123);
+					setState(108);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
 				}
 				}
-				setState(128);
+				setState(113);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(129);
+			setState(114);
 			match(RPAR);
-			setState(130);
+			setState(115);
 			match(LBRACE);
-			setState(134);
+			setState(119);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 6954340676939022336L) != 0)) {
 				{
-				setState(131);
+				setState(116);
 				com(0);
-				setState(132);
+				setState(117);
 				match(SEMICOLON);
 				}
 			}
 
-			setState(136);
+			setState(121);
 			match(RETURN);
-			setState(137);
+			setState(122);
 			exp(0);
-			setState(138);
+			setState(123);
 			match(RBRACE);
 			}
 		}
@@ -1461,38 +1254,38 @@ public class ImpParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(189);
+			setState(174);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
 				{
 				_localctx = new IfContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(141);
+				setState(126);
 				match(IF);
-				setState(142);
+				setState(127);
 				match(LPAR);
-				setState(143);
+				setState(128);
 				exp(0);
-				setState(144);
+				setState(129);
 				match(RPAR);
-				setState(145);
+				setState(130);
 				match(THEN);
-				setState(146);
+				setState(131);
 				match(LBRACE);
-				setState(147);
+				setState(132);
 				com(0);
-				setState(148);
+				setState(133);
 				match(RBRACE);
-				setState(149);
+				setState(134);
 				match(ELSE);
-				setState(150);
+				setState(135);
 				match(LBRACE);
-				setState(151);
+				setState(136);
 				com(0);
-				setState(152);
+				setState(137);
 				match(RBRACE);
 				}
 				break;
@@ -1501,11 +1294,11 @@ public class ImpParser extends Parser {
 				_localctx = new AssignContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(154);
+				setState(139);
 				match(ID);
-				setState(155);
+				setState(140);
 				match(ASSIGN);
-				setState(156);
+				setState(141);
 				exp(0);
 				}
 				break;
@@ -1514,13 +1307,13 @@ public class ImpParser extends Parser {
 				_localctx = new VarGlobalAssignContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(157);
+				setState(142);
 				match(ID);
-				setState(158);
+				setState(143);
 				match(DOTG);
-				setState(159);
+				setState(144);
 				match(ASSIGN);
-				setState(160);
+				setState(145);
 				exp(0);
 				}
 				break;
@@ -1529,7 +1322,7 @@ public class ImpParser extends Parser {
 				_localctx = new SkipContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(161);
+				setState(146);
 				match(SKIPP);
 				}
 				break;
@@ -1538,19 +1331,19 @@ public class ImpParser extends Parser {
 				_localctx = new WhileContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(162);
+				setState(147);
 				match(WHILE);
-				setState(163);
+				setState(148);
 				match(LPAR);
-				setState(164);
+				setState(149);
 				exp(0);
-				setState(165);
+				setState(150);
 				match(RPAR);
-				setState(166);
+				setState(151);
 				match(LBRACE);
-				setState(167);
+				setState(152);
 				com(0);
-				setState(168);
+				setState(153);
 				match(RBRACE);
 				}
 				break;
@@ -1559,13 +1352,13 @@ public class ImpParser extends Parser {
 				_localctx = new OutContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(170);
+				setState(155);
 				match(OUT);
-				setState(171);
+				setState(156);
 				match(LPAR);
-				setState(172);
+				setState(157);
 				exp(0);
-				setState(173);
+				setState(158);
 				match(RPAR);
 				}
 				break;
@@ -1574,19 +1367,19 @@ public class ImpParser extends Parser {
 				_localctx = new NdContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(175);
+				setState(160);
 				match(LBRACE);
-				setState(176);
+				setState(161);
 				com(0);
-				setState(177);
+				setState(162);
 				match(RBRACE);
-				setState(178);
+				setState(163);
 				match(ND);
-				setState(179);
+				setState(164);
 				match(LBRACE);
-				setState(180);
+				setState(165);
 				com(0);
-				setState(181);
+				setState(166);
 				match(RBRACE);
 				}
 				break;
@@ -1595,23 +1388,23 @@ public class ImpParser extends Parser {
 				_localctx = new ArnoldInitContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(183);
+				setState(168);
 				match(DOLLAR);
-				setState(184);
+				setState(169);
 				match(LBRACE);
-				setState(185);
+				setState(170);
 				arnoldIni();
-				setState(186);
+				setState(171);
 				match(RBRACE);
-				setState(187);
+				setState(172);
 				match(DOLLAR);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(196);
+			setState(181);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -1620,18 +1413,18 @@ public class ImpParser extends Parser {
 					{
 					_localctx = new SeqContext(new ComContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_com);
-					setState(191);
+					setState(176);
 					if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-					setState(192);
+					setState(177);
 					match(SEMICOLON);
-					setState(193);
+					setState(178);
 					com(6);
 					}
 					} 
 				}
-				setState(198);
+				setState(183);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			}
 			}
 		}
@@ -1978,16 +1771,16 @@ public class ImpParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(224);
+			setState(209);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 			case 1:
 				{
 				_localctx = new NatContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(200);
+				setState(185);
 				match(NAT);
 				}
 				break;
@@ -1996,7 +1789,7 @@ public class ImpParser extends Parser {
 				_localctx = new BoolContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(201);
+				setState(186);
 				match(BOOL);
 				}
 				break;
@@ -2005,37 +1798,37 @@ public class ImpParser extends Parser {
 				_localctx = new FunctionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(202);
+				setState(187);
 				match(ID);
-				setState(203);
+				setState(188);
 				match(LPAR);
-				setState(212);
+				setState(197);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 4620697615929966592L) != 0)) {
 					{
-					setState(204);
+					setState(189);
 					exp(0);
-					setState(209);
+					setState(194);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					while (_la==COMMA) {
 						{
 						{
-						setState(205);
+						setState(190);
 						match(COMMA);
-						setState(206);
+						setState(191);
 						exp(0);
 						}
 						}
-						setState(211);
+						setState(196);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					}
 					}
 				}
 
-				setState(214);
+				setState(199);
 				match(RPAR);
 				}
 				break;
@@ -2044,11 +1837,11 @@ public class ImpParser extends Parser {
 				_localctx = new ParExpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(215);
+				setState(200);
 				match(LPAR);
-				setState(216);
+				setState(201);
 				exp(0);
-				setState(217);
+				setState(202);
 				match(RPAR);
 				}
 				break;
@@ -2057,9 +1850,9 @@ public class ImpParser extends Parser {
 				_localctx = new NotContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(219);
+				setState(204);
 				match(NOT);
-				setState(220);
+				setState(205);
 				exp(8);
 				}
 				break;
@@ -2068,7 +1861,7 @@ public class ImpParser extends Parser {
 				_localctx = new IdContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(221);
+				setState(206);
 				match(ID);
 				}
 				break;
@@ -2077,34 +1870,34 @@ public class ImpParser extends Parser {
 				_localctx = new GlobalIDContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(222);
+				setState(207);
 				match(ID);
-				setState(223);
+				setState(208);
 				match(DOTG);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(246);
+			setState(231);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,16,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(244);
+					setState(229);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 					case 1:
 						{
 						_localctx = new PowContext(new ExpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_exp);
-						setState(226);
+						setState(211);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(227);
+						setState(212);
 						match(POW);
-						setState(228);
+						setState(213);
 						exp(9);
 						}
 						break;
@@ -2112,9 +1905,9 @@ public class ImpParser extends Parser {
 						{
 						_localctx = new DivMulModContext(new ExpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_exp);
-						setState(229);
+						setState(214);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(230);
+						setState(215);
 						((DivMulModContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 7516192768L) != 0)) ) {
@@ -2125,7 +1918,7 @@ public class ImpParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(231);
+						setState(216);
 						exp(8);
 						}
 						break;
@@ -2133,9 +1926,9 @@ public class ImpParser extends Parser {
 						{
 						_localctx = new PlusMinusContext(new ExpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_exp);
-						setState(232);
+						setState(217);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(233);
+						setState(218);
 						((PlusMinusContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==PLUS || _la==MINUS) ) {
@@ -2146,7 +1939,7 @@ public class ImpParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(234);
+						setState(219);
 						exp(7);
 						}
 						break;
@@ -2154,9 +1947,9 @@ public class ImpParser extends Parser {
 						{
 						_localctx = new CmpExpContext(new ExpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_exp);
-						setState(235);
+						setState(220);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(236);
+						setState(221);
 						((CmpExpContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 4123168604160L) != 0)) ) {
@@ -2167,7 +1960,7 @@ public class ImpParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(237);
+						setState(222);
 						exp(6);
 						}
 						break;
@@ -2175,9 +1968,9 @@ public class ImpParser extends Parser {
 						{
 						_localctx = new EqExpContext(new ExpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_exp);
-						setState(238);
+						setState(223);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(239);
+						setState(224);
 						((EqExpContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==EQQ || _la==NEQ) ) {
@@ -2188,7 +1981,7 @@ public class ImpParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(240);
+						setState(225);
 						exp(5);
 						}
 						break;
@@ -2196,9 +1989,9 @@ public class ImpParser extends Parser {
 						{
 						_localctx = new LogicExpContext(new ExpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_exp);
-						setState(241);
+						setState(226);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(242);
+						setState(227);
 						((LogicExpContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==AND || _la==OR) ) {
@@ -2209,16 +2002,16 @@ public class ImpParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(243);
+						setState(228);
 						exp(4);
 						}
 						break;
 					}
 					} 
 				}
-				setState(248);
+				setState(233);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,16,_ctx);
 			}
 			}
 		}
@@ -2268,7 +2061,7 @@ public class ImpParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001B\u00fa\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001A\u00eb\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0001\u0000\u0005\u0000\u0014\b\u0000\n\u0000\f\u0000\u0017"+
@@ -2283,153 +2076,141 @@ public class ImpParser extends Parser {
 		"\u0001\u0003\u0001\u0003\u0001\u0003\u0004\u0003M\b\u0003\u000b\u0003"+
 		"\f\u0003N\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003"+
 		"\u0001\u0003\u0003\u0003W\b\u0003\u0001\u0004\u0001\u0004\u0001\u0004"+
-		"\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004"+
-		"\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004"+
-		"\u0001\u0004\u0003\u0004i\b\u0004\u0001\u0005\u0001\u0005\u0001\u0005"+
-		"\u0001\u0005\u0001\u0005\u0003\u0005p\b\u0005\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0005\u0006x\b\u0006"+
-		"\n\u0006\f\u0006{\t\u0006\u0005\u0006}\b\u0006\n\u0006\f\u0006\u0080\t"+
-		"\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0003"+
-		"\u0006\u0087\b\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001"+
-		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
-		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
-		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
-		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
-		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
-		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
-		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
-		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
-		"\u0007\u0003\u0007\u00be\b\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0005"+
-		"\u0007\u00c3\b\u0007\n\u0007\f\u0007\u00c6\t\u0007\u0001\b\u0001\b\u0001"+
-		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0005\b\u00d0\b\b\n\b\f\b\u00d3"+
-		"\t\b\u0003\b\u00d5\b\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b"+
-		"\u0001\b\u0001\b\u0001\b\u0001\b\u0003\b\u00e1\b\b\u0001\b\u0001\b\u0001"+
+		"\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0003\u0005"+
+		"a\b\u0005\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
+		"\u0001\u0006\u0005\u0006i\b\u0006\n\u0006\f\u0006l\t\u0006\u0005\u0006"+
+		"n\b\u0006\n\u0006\f\u0006q\t\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
+		"\u0001\u0006\u0001\u0006\u0003\u0006x\b\u0006\u0001\u0006\u0001\u0006"+
+		"\u0001\u0006\u0001\u0006\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
+		"\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
+		"\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
+		"\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
+		"\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
+		"\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
+		"\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
+		"\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
+		"\u0001\u0007\u0001\u0007\u0001\u0007\u0003\u0007\u00af\b\u0007\u0001\u0007"+
+		"\u0001\u0007\u0001\u0007\u0005\u0007\u00b4\b\u0007\n\u0007\f\u0007\u00b7"+
+		"\t\u0007\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
+		"\b\u0005\b\u00c1\b\b\n\b\f\b\u00c4\t\b\u0003\b\u00c6\b\b\u0001\b\u0001"+
+		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0003"+
+		"\b\u00d2\b\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
 		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
-		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0005\b\u00f5\b\b\n"+
-		"\b\f\b\u00f8\t\b\u0001\b\u0000\u0002\u000e\u0010\t\u0000\u0002\u0004\u0006"+
-		"\b\n\f\u000e\u0010\u0000\u0006\u0002\u0000>>AA\u0001\u0000\u001e \u0001"+
-		"\u0000\u001c\u001d\u0001\u0000&)\u0001\u0000$%\u0001\u0000\"#\u011d\u0000"+
-		"\u0015\u0001\u0000\u0000\u0000\u0002!\u0001\u0000\u0000\u0000\u0004*\u0001"+
-		"\u0000\u0000\u0000\u0006V\u0001\u0000\u0000\u0000\bh\u0001\u0000\u0000"+
-		"\u0000\no\u0001\u0000\u0000\u0000\fq\u0001\u0000\u0000\u0000\u000e\u00bd"+
-		"\u0001\u0000\u0000\u0000\u0010\u00e0\u0001\u0000\u0000\u0000\u0012\u0014"+
-		"\u0003\f\u0006\u0000\u0013\u0012\u0001\u0000\u0000\u0000\u0014\u0017\u0001"+
-		"\u0000\u0000\u0000\u0015\u0013\u0001\u0000\u0000\u0000\u0015\u0016\u0001"+
-		"\u0000\u0000\u0000\u0016\u001b\u0001\u0000\u0000\u0000\u0017\u0015\u0001"+
-		"\u0000\u0000\u0000\u0018\u001a\u0003\u0004\u0002\u0000\u0019\u0018\u0001"+
-		"\u0000\u0000\u0000\u001a\u001d\u0001\u0000\u0000\u0000\u001b\u0019\u0001"+
-		"\u0000\u0000\u0000\u001b\u001c\u0001\u0000\u0000\u0000\u001c\u001e\u0001"+
-		"\u0000\u0000\u0000\u001d\u001b\u0001\u0000\u0000\u0000\u001e\u001f\u0003"+
-		"\u000e\u0007\u0000\u001f \u0005\u0000\u0000\u0001 \u0001\u0001\u0000\u0000"+
-		"\u0000!%\u0005\u0001\u0000\u0000\"$\u0003\u0006\u0003\u0000#\"\u0001\u0000"+
-		"\u0000\u0000$\'\u0001\u0000\u0000\u0000%#\u0001\u0000\u0000\u0000%&\u0001"+
-		"\u0000\u0000\u0000&(\u0001\u0000\u0000\u0000\'%\u0001\u0000\u0000\u0000"+
-		"()\u0005\u0002\u0000\u0000)\u0003\u0001\u0000\u0000\u0000*+\u00054\u0000"+
-		"\u0000+,\u0005>\u0000\u0000,-\u00050\u0000\u0000-.\u0003\u0010\b\u0000"+
-		"./\u0005:\u0000\u0000/\u0005\u0001\u0000\u0000\u000001\u0005\u0015\u0000"+
-		"\u000012\u0003\n\u0005\u000023\u0003\u0006\u0003\u000034\u0005\u0016\u0000"+
-		"\u000045\u0003\u0006\u0003\u000056\u0005\u0017\u0000\u00006W\u0001\u0000"+
-		"\u0000\u000078\u0005\u0015\u0000\u000089\u0003\n\u0005\u00009:\u0003\u0006"+
-		"\u0003\u0000:;\u0005\u0017\u0000\u0000;W\u0001\u0000\u0000\u0000<=\u0005"+
-		"\u0018\u0000\u0000=?\u0003\n\u0005\u0000>@\u0003\u0006\u0003\u0000?>\u0001"+
-		"\u0000\u0000\u0000@A\u0001\u0000\u0000\u0000A?\u0001\u0000\u0000\u0000"+
-		"AB\u0001\u0000\u0000\u0000BC\u0001\u0000\u0000\u0000CD\u0005\u0019\u0000"+
-		"\u0000DW\u0001\u0000\u0000\u0000EF\u0005\u000f\u0000\u0000FW\u0007\u0000"+
-		"\u0000\u0000GH\u0005\u0012\u0000\u0000HI\u0005>\u0000\u0000IJ\u0005\u0013"+
-		"\u0000\u0000JL\u0003\n\u0005\u0000KM\u0003\b\u0004\u0000LK\u0001\u0000"+
-		"\u0000\u0000MN\u0001\u0000\u0000\u0000NL\u0001\u0000\u0000\u0000NO\u0001"+
-		"\u0000\u0000\u0000OP\u0001\u0000\u0000\u0000PQ\u0005\u0014\u0000\u0000"+
-		"QW\u0001\u0000\u0000\u0000RS\u0005\u0010\u0000\u0000ST\u0005>\u0000\u0000"+
-		"TU\u0005\u0011\u0000\u0000UW\u0003\n\u0005\u0000V0\u0001\u0000\u0000\u0000"+
-		"V7\u0001\u0000\u0000\u0000V<\u0001\u0000\u0000\u0000VE\u0001\u0000\u0000"+
-		"\u0000VG\u0001\u0000\u0000\u0000VR\u0001\u0000\u0000\u0000W\u0007\u0001"+
-		"\u0000\u0000\u0000XY\u0005\u0007\u0000\u0000Yi\u0003\n\u0005\u0000Z[\u0005"+
-		"\b\u0000\u0000[i\u0003\n\u0005\u0000\\]\u0005\t\u0000\u0000]i\u0003\n"+
-		"\u0005\u0000^_\u0005\n\u0000\u0000_i\u0003\n\u0005\u0000`a\u0005\u000b"+
-		"\u0000\u0000ai\u0003\n\u0005\u0000bc\u0005\f\u0000\u0000ci\u0003\n\u0005"+
-		"\u0000de\u0005\r\u0000\u0000ei\u0003\n\u0005\u0000fg\u0005\u000e\u0000"+
-		"\u0000gi\u0003\n\u0005\u0000hX\u0001\u0000\u0000\u0000hZ\u0001\u0000\u0000"+
-		"\u0000h\\\u0001\u0000\u0000\u0000h^\u0001\u0000\u0000\u0000h`\u0001\u0000"+
-		"\u0000\u0000hb\u0001\u0000\u0000\u0000hd\u0001\u0000\u0000\u0000hf\u0001"+
-		"\u0000\u0000\u0000i\t\u0001\u0000\u0000\u0000jp\u0005>\u0000\u0000kp\u0005"+
-		"@\u0000\u0000lp\u0005B\u0000\u0000mn\u0005\u0003\u0000\u0000np\u0005\u0004"+
-		"\u0000\u0000oj\u0001\u0000\u0000\u0000ok\u0001\u0000\u0000\u0000ol\u0001"+
-		"\u0000\u0000\u0000om\u0001\u0000\u0000\u0000p\u000b\u0001\u0000\u0000"+
-		"\u0000qr\u00052\u0000\u0000rs\u0005>\u0000\u0000s~\u00055\u0000\u0000"+
-		"ty\u0005>\u0000\u0000uv\u00059\u0000\u0000vx\u0005>\u0000\u0000wu\u0001"+
-		"\u0000\u0000\u0000x{\u0001\u0000\u0000\u0000yw\u0001\u0000\u0000\u0000"+
-		"yz\u0001\u0000\u0000\u0000z}\u0001\u0000\u0000\u0000{y\u0001\u0000\u0000"+
-		"\u0000|t\u0001\u0000\u0000\u0000}\u0080\u0001\u0000\u0000\u0000~|\u0001"+
-		"\u0000\u0000\u0000~\u007f\u0001\u0000\u0000\u0000\u007f\u0081\u0001\u0000"+
-		"\u0000\u0000\u0080~\u0001\u0000\u0000\u0000\u0081\u0082\u00056\u0000\u0000"+
-		"\u0082\u0086\u00057\u0000\u0000\u0083\u0084\u0003\u000e\u0007\u0000\u0084"+
-		"\u0085\u0005:\u0000\u0000\u0085\u0087\u0001\u0000\u0000\u0000\u0086\u0083"+
-		"\u0001\u0000\u0000\u0000\u0086\u0087\u0001\u0000\u0000\u0000\u0087\u0088"+
-		"\u0001\u0000\u0000\u0000\u0088\u0089\u00053\u0000\u0000\u0089\u008a\u0003"+
-		"\u0010\b\u0000\u008a\u008b\u00058\u0000\u0000\u008b\r\u0001\u0000\u0000"+
-		"\u0000\u008c\u008d\u0006\u0007\uffff\uffff\u0000\u008d\u008e\u0005+\u0000"+
-		"\u0000\u008e\u008f\u00055\u0000\u0000\u008f\u0090\u0003\u0010\b\u0000"+
-		"\u0090\u0091\u00056\u0000\u0000\u0091\u0092\u0005,\u0000\u0000\u0092\u0093"+
-		"\u00057\u0000\u0000\u0093\u0094\u0003\u000e\u0007\u0000\u0094\u0095\u0005"+
-		"8\u0000\u0000\u0095\u0096\u0005-\u0000\u0000\u0096\u0097\u00057\u0000"+
-		"\u0000\u0097\u0098\u0003\u000e\u0007\u0000\u0098\u0099\u00058\u0000\u0000"+
-		"\u0099\u00be\u0001\u0000\u0000\u0000\u009a\u009b\u0005>\u0000\u0000\u009b"+
-		"\u009c\u00050\u0000\u0000\u009c\u00be\u0003\u0010\b\u0000\u009d\u009e"+
-		"\u0005>\u0000\u0000\u009e\u009f\u0005;\u0000\u0000\u009f\u00a0\u00050"+
-		"\u0000\u0000\u00a0\u00be\u0003\u0010\b\u0000\u00a1\u00be\u0005/\u0000"+
-		"\u0000\u00a2\u00a3\u0005.\u0000\u0000\u00a3\u00a4\u00055\u0000\u0000\u00a4"+
-		"\u00a5\u0003\u0010\b\u0000\u00a5\u00a6\u00056\u0000\u0000\u00a6\u00a7"+
-		"\u00057\u0000\u0000\u00a7\u00a8\u0003\u000e\u0007\u0000\u00a8\u00a9\u0005"+
-		"8\u0000\u0000\u00a9\u00be\u0001\u0000\u0000\u0000\u00aa\u00ab\u00051\u0000"+
-		"\u0000\u00ab\u00ac\u00055\u0000\u0000\u00ac\u00ad\u0003\u0010\b\u0000"+
-		"\u00ad\u00ae\u00056\u0000\u0000\u00ae\u00be\u0001\u0000\u0000\u0000\u00af"+
-		"\u00b0\u00057\u0000\u0000\u00b0\u00b1\u0003\u000e\u0007\u0000\u00b1\u00b2"+
-		"\u00058\u0000\u0000\u00b2\u00b3\u0005<\u0000\u0000\u00b3\u00b4\u00057"+
-		"\u0000\u0000\u00b4\u00b5\u0003\u000e\u0007\u0000\u00b5\u00b6\u00058\u0000"+
-		"\u0000\u00b6\u00be\u0001\u0000\u0000\u0000\u00b7\u00b8\u0005=\u0000\u0000"+
-		"\u00b8\u00b9\u00057\u0000\u0000\u00b9\u00ba\u0003\u0002\u0001\u0000\u00ba"+
-		"\u00bb\u00058\u0000\u0000\u00bb\u00bc\u0005=\u0000\u0000\u00bc\u00be\u0001"+
-		"\u0000\u0000\u0000\u00bd\u008c\u0001\u0000\u0000\u0000\u00bd\u009a\u0001"+
-		"\u0000\u0000\u0000\u00bd\u009d\u0001\u0000\u0000\u0000\u00bd\u00a1\u0001"+
-		"\u0000\u0000\u0000\u00bd\u00a2\u0001\u0000\u0000\u0000\u00bd\u00aa\u0001"+
-		"\u0000\u0000\u0000\u00bd\u00af\u0001\u0000\u0000\u0000\u00bd\u00b7\u0001"+
-		"\u0000\u0000\u0000\u00be\u00c4\u0001\u0000\u0000\u0000\u00bf\u00c0\n\u0005"+
-		"\u0000\u0000\u00c0\u00c1\u0005:\u0000\u0000\u00c1\u00c3\u0003\u000e\u0007"+
-		"\u0006\u00c2\u00bf\u0001\u0000\u0000\u0000\u00c3\u00c6\u0001\u0000\u0000"+
-		"\u0000\u00c4\u00c2\u0001\u0000\u0000\u0000\u00c4\u00c5\u0001\u0000\u0000"+
-		"\u0000\u00c5\u000f\u0001\u0000\u0000\u0000\u00c6\u00c4\u0001\u0000\u0000"+
-		"\u0000\u00c7\u00c8\u0006\b\uffff\uffff\u0000\u00c8\u00e1\u0005\u001a\u0000"+
-		"\u0000\u00c9\u00e1\u0005\u001b\u0000\u0000\u00ca\u00cb\u0005>\u0000\u0000"+
-		"\u00cb\u00d4\u00055\u0000\u0000\u00cc\u00d1\u0003\u0010\b\u0000\u00cd"+
-		"\u00ce\u00059\u0000\u0000\u00ce\u00d0\u0003\u0010\b\u0000\u00cf\u00cd"+
-		"\u0001\u0000\u0000\u0000\u00d0\u00d3\u0001\u0000\u0000\u0000\u00d1\u00cf"+
-		"\u0001\u0000\u0000\u0000\u00d1\u00d2\u0001\u0000\u0000\u0000\u00d2\u00d5"+
-		"\u0001\u0000\u0000\u0000\u00d3\u00d1\u0001\u0000\u0000\u0000\u00d4\u00cc"+
-		"\u0001\u0000\u0000\u0000\u00d4\u00d5\u0001\u0000\u0000\u0000\u00d5\u00d6"+
-		"\u0001\u0000\u0000\u0000\u00d6\u00e1\u00056\u0000\u0000\u00d7\u00d8\u0005"+
-		"5\u0000\u0000\u00d8\u00d9\u0003\u0010\b\u0000\u00d9\u00da\u00056\u0000"+
-		"\u0000\u00da\u00e1\u0001\u0000\u0000\u0000\u00db\u00dc\u0005*\u0000\u0000"+
-		"\u00dc\u00e1\u0003\u0010\b\b\u00dd\u00e1\u0005>\u0000\u0000\u00de\u00df"+
-		"\u0005>\u0000\u0000\u00df\u00e1\u0005;\u0000\u0000\u00e0\u00c7\u0001\u0000"+
-		"\u0000\u0000\u00e0\u00c9\u0001\u0000\u0000\u0000\u00e0\u00ca\u0001\u0000"+
-		"\u0000\u0000\u00e0\u00d7\u0001\u0000\u0000\u0000\u00e0\u00db\u0001\u0000"+
-		"\u0000\u0000\u00e0\u00dd\u0001\u0000\u0000\u0000\u00e0\u00de\u0001\u0000"+
-		"\u0000\u0000\u00e1\u00f6\u0001\u0000\u0000\u0000\u00e2\u00e3\n\t\u0000"+
-		"\u0000\u00e3\u00e4\u0005!\u0000\u0000\u00e4\u00f5\u0003\u0010\b\t\u00e5"+
-		"\u00e6\n\u0007\u0000\u0000\u00e6\u00e7\u0007\u0001\u0000\u0000\u00e7\u00f5"+
-		"\u0003\u0010\b\b\u00e8\u00e9\n\u0006\u0000\u0000\u00e9\u00ea\u0007\u0002"+
-		"\u0000\u0000\u00ea\u00f5\u0003\u0010\b\u0007\u00eb\u00ec\n\u0005\u0000"+
-		"\u0000\u00ec\u00ed\u0007\u0003\u0000\u0000\u00ed\u00f5\u0003\u0010\b\u0006"+
-		"\u00ee\u00ef\n\u0004\u0000\u0000\u00ef\u00f0\u0007\u0004\u0000\u0000\u00f0"+
-		"\u00f5\u0003\u0010\b\u0005\u00f1\u00f2\n\u0003\u0000\u0000\u00f2\u00f3"+
-		"\u0007\u0005\u0000\u0000\u00f3\u00f5\u0003\u0010\b\u0004\u00f4\u00e2\u0001"+
-		"\u0000\u0000\u0000\u00f4\u00e5\u0001\u0000\u0000\u0000\u00f4\u00e8\u0001"+
-		"\u0000\u0000\u0000\u00f4\u00eb\u0001\u0000\u0000\u0000\u00f4\u00ee\u0001"+
-		"\u0000\u0000\u0000\u00f4\u00f1\u0001\u0000\u0000\u0000\u00f5\u00f8\u0001"+
-		"\u0000\u0000\u0000\u00f6\u00f4\u0001\u0000\u0000\u0000\u00f6\u00f7\u0001"+
-		"\u0000\u0000\u0000\u00f7\u0011\u0001\u0000\u0000\u0000\u00f8\u00f6\u0001"+
-		"\u0000\u0000\u0000\u0012\u0015\u001b%ANVhoy~\u0086\u00bd\u00c4\u00d1\u00d4"+
-		"\u00e0\u00f4\u00f6";
+		"\b\u0001\b\u0005\b\u00e6\b\b\n\b\f\b\u00e9\t\b\u0001\b\u0000\u0002\u000e"+
+		"\u0010\t\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0000\u0007\u0002\u0000"+
+		">>@@\u0001\u0000\u0007\u000e\u0001\u0000\u001e \u0001\u0000\u001c\u001d"+
+		"\u0001\u0000&)\u0001\u0000$%\u0001\u0000\"#\u0107\u0000\u0015\u0001\u0000"+
+		"\u0000\u0000\u0002!\u0001\u0000\u0000\u0000\u0004*\u0001\u0000\u0000\u0000"+
+		"\u0006V\u0001\u0000\u0000\u0000\bX\u0001\u0000\u0000\u0000\n`\u0001\u0000"+
+		"\u0000\u0000\fb\u0001\u0000\u0000\u0000\u000e\u00ae\u0001\u0000\u0000"+
+		"\u0000\u0010\u00d1\u0001\u0000\u0000\u0000\u0012\u0014\u0003\f\u0006\u0000"+
+		"\u0013\u0012\u0001\u0000\u0000\u0000\u0014\u0017\u0001\u0000\u0000\u0000"+
+		"\u0015\u0013\u0001\u0000\u0000\u0000\u0015\u0016\u0001\u0000\u0000\u0000"+
+		"\u0016\u001b\u0001\u0000\u0000\u0000\u0017\u0015\u0001\u0000\u0000\u0000"+
+		"\u0018\u001a\u0003\u0004\u0002\u0000\u0019\u0018\u0001\u0000\u0000\u0000"+
+		"\u001a\u001d\u0001\u0000\u0000\u0000\u001b\u0019\u0001\u0000\u0000\u0000"+
+		"\u001b\u001c\u0001\u0000\u0000\u0000\u001c\u001e\u0001\u0000\u0000\u0000"+
+		"\u001d\u001b\u0001\u0000\u0000\u0000\u001e\u001f\u0003\u000e\u0007\u0000"+
+		"\u001f \u0005\u0000\u0000\u0001 \u0001\u0001\u0000\u0000\u0000!%\u0005"+
+		"\u0001\u0000\u0000\"$\u0003\u0006\u0003\u0000#\"\u0001\u0000\u0000\u0000"+
+		"$\'\u0001\u0000\u0000\u0000%#\u0001\u0000\u0000\u0000%&\u0001\u0000\u0000"+
+		"\u0000&(\u0001\u0000\u0000\u0000\'%\u0001\u0000\u0000\u0000()\u0005\u0002"+
+		"\u0000\u0000)\u0003\u0001\u0000\u0000\u0000*+\u00054\u0000\u0000+,\u0005"+
+		">\u0000\u0000,-\u00050\u0000\u0000-.\u0003\u0010\b\u0000./\u0005:\u0000"+
+		"\u0000/\u0005\u0001\u0000\u0000\u000001\u0005\u0015\u0000\u000012\u0003"+
+		"\n\u0005\u000023\u0003\u0006\u0003\u000034\u0005\u0016\u0000\u000045\u0003"+
+		"\u0006\u0003\u000056\u0005\u0017\u0000\u00006W\u0001\u0000\u0000\u0000"+
+		"78\u0005\u0015\u0000\u000089\u0003\n\u0005\u00009:\u0003\u0006\u0003\u0000"+
+		":;\u0005\u0017\u0000\u0000;W\u0001\u0000\u0000\u0000<=\u0005\u0018\u0000"+
+		"\u0000=?\u0003\n\u0005\u0000>@\u0003\u0006\u0003\u0000?>\u0001\u0000\u0000"+
+		"\u0000@A\u0001\u0000\u0000\u0000A?\u0001\u0000\u0000\u0000AB\u0001\u0000"+
+		"\u0000\u0000BC\u0001\u0000\u0000\u0000CD\u0005\u0019\u0000\u0000DW\u0001"+
+		"\u0000\u0000\u0000EF\u0005\u000f\u0000\u0000FW\u0007\u0000\u0000\u0000"+
+		"GH\u0005\u0012\u0000\u0000HI\u0005>\u0000\u0000IJ\u0005\u0013\u0000\u0000"+
+		"JL\u0003\n\u0005\u0000KM\u0003\b\u0004\u0000LK\u0001\u0000\u0000\u0000"+
+		"MN\u0001\u0000\u0000\u0000NL\u0001\u0000\u0000\u0000NO\u0001\u0000\u0000"+
+		"\u0000OP\u0001\u0000\u0000\u0000PQ\u0005\u0014\u0000\u0000QW\u0001\u0000"+
+		"\u0000\u0000RS\u0005\u0010\u0000\u0000ST\u0005>\u0000\u0000TU\u0005\u0011"+
+		"\u0000\u0000UW\u0003\n\u0005\u0000V0\u0001\u0000\u0000\u0000V7\u0001\u0000"+
+		"\u0000\u0000V<\u0001\u0000\u0000\u0000VE\u0001\u0000\u0000\u0000VG\u0001"+
+		"\u0000\u0000\u0000VR\u0001\u0000\u0000\u0000W\u0007\u0001\u0000\u0000"+
+		"\u0000XY\u0007\u0001\u0000\u0000YZ\u0003\n\u0005\u0000Z\t\u0001\u0000"+
+		"\u0000\u0000[a\u0005>\u0000\u0000\\a\u0005@\u0000\u0000]a\u0005A\u0000"+
+		"\u0000^_\u0005\u0003\u0000\u0000_a\u0005\u0004\u0000\u0000`[\u0001\u0000"+
+		"\u0000\u0000`\\\u0001\u0000\u0000\u0000`]\u0001\u0000\u0000\u0000`^\u0001"+
+		"\u0000\u0000\u0000a\u000b\u0001\u0000\u0000\u0000bc\u00052\u0000\u0000"+
+		"cd\u0005>\u0000\u0000do\u00055\u0000\u0000ej\u0005>\u0000\u0000fg\u0005"+
+		"9\u0000\u0000gi\u0005>\u0000\u0000hf\u0001\u0000\u0000\u0000il\u0001\u0000"+
+		"\u0000\u0000jh\u0001\u0000\u0000\u0000jk\u0001\u0000\u0000\u0000kn\u0001"+
+		"\u0000\u0000\u0000lj\u0001\u0000\u0000\u0000me\u0001\u0000\u0000\u0000"+
+		"nq\u0001\u0000\u0000\u0000om\u0001\u0000\u0000\u0000op\u0001\u0000\u0000"+
+		"\u0000pr\u0001\u0000\u0000\u0000qo\u0001\u0000\u0000\u0000rs\u00056\u0000"+
+		"\u0000sw\u00057\u0000\u0000tu\u0003\u000e\u0007\u0000uv\u0005:\u0000\u0000"+
+		"vx\u0001\u0000\u0000\u0000wt\u0001\u0000\u0000\u0000wx\u0001\u0000\u0000"+
+		"\u0000xy\u0001\u0000\u0000\u0000yz\u00053\u0000\u0000z{\u0003\u0010\b"+
+		"\u0000{|\u00058\u0000\u0000|\r\u0001\u0000\u0000\u0000}~\u0006\u0007\uffff"+
+		"\uffff\u0000~\u007f\u0005+\u0000\u0000\u007f\u0080\u00055\u0000\u0000"+
+		"\u0080\u0081\u0003\u0010\b\u0000\u0081\u0082\u00056\u0000\u0000\u0082"+
+		"\u0083\u0005,\u0000\u0000\u0083\u0084\u00057\u0000\u0000\u0084\u0085\u0003"+
+		"\u000e\u0007\u0000\u0085\u0086\u00058\u0000\u0000\u0086\u0087\u0005-\u0000"+
+		"\u0000\u0087\u0088\u00057\u0000\u0000\u0088\u0089\u0003\u000e\u0007\u0000"+
+		"\u0089\u008a\u00058\u0000\u0000\u008a\u00af\u0001\u0000\u0000\u0000\u008b"+
+		"\u008c\u0005>\u0000\u0000\u008c\u008d\u00050\u0000\u0000\u008d\u00af\u0003"+
+		"\u0010\b\u0000\u008e\u008f\u0005>\u0000\u0000\u008f\u0090\u0005;\u0000"+
+		"\u0000\u0090\u0091\u00050\u0000\u0000\u0091\u00af\u0003\u0010\b\u0000"+
+		"\u0092\u00af\u0005/\u0000\u0000\u0093\u0094\u0005.\u0000\u0000\u0094\u0095"+
+		"\u00055\u0000\u0000\u0095\u0096\u0003\u0010\b\u0000\u0096\u0097\u0005"+
+		"6\u0000\u0000\u0097\u0098\u00057\u0000\u0000\u0098\u0099\u0003\u000e\u0007"+
+		"\u0000\u0099\u009a\u00058\u0000\u0000\u009a\u00af\u0001\u0000\u0000\u0000"+
+		"\u009b\u009c\u00051\u0000\u0000\u009c\u009d\u00055\u0000\u0000\u009d\u009e"+
+		"\u0003\u0010\b\u0000\u009e\u009f\u00056\u0000\u0000\u009f\u00af\u0001"+
+		"\u0000\u0000\u0000\u00a0\u00a1\u00057\u0000\u0000\u00a1\u00a2\u0003\u000e"+
+		"\u0007\u0000\u00a2\u00a3\u00058\u0000\u0000\u00a3\u00a4\u0005<\u0000\u0000"+
+		"\u00a4\u00a5\u00057\u0000\u0000\u00a5\u00a6\u0003\u000e\u0007\u0000\u00a6"+
+		"\u00a7\u00058\u0000\u0000\u00a7\u00af\u0001\u0000\u0000\u0000\u00a8\u00a9"+
+		"\u0005=\u0000\u0000\u00a9\u00aa\u00057\u0000\u0000\u00aa\u00ab\u0003\u0002"+
+		"\u0001\u0000\u00ab\u00ac\u00058\u0000\u0000\u00ac\u00ad\u0005=\u0000\u0000"+
+		"\u00ad\u00af\u0001\u0000\u0000\u0000\u00ae}\u0001\u0000\u0000\u0000\u00ae"+
+		"\u008b\u0001\u0000\u0000\u0000\u00ae\u008e\u0001\u0000\u0000\u0000\u00ae"+
+		"\u0092\u0001\u0000\u0000\u0000\u00ae\u0093\u0001\u0000\u0000\u0000\u00ae"+
+		"\u009b\u0001\u0000\u0000\u0000\u00ae\u00a0\u0001\u0000\u0000\u0000\u00ae"+
+		"\u00a8\u0001\u0000\u0000\u0000\u00af\u00b5\u0001\u0000\u0000\u0000\u00b0"+
+		"\u00b1\n\u0005\u0000\u0000\u00b1\u00b2\u0005:\u0000\u0000\u00b2\u00b4"+
+		"\u0003\u000e\u0007\u0006\u00b3\u00b0\u0001\u0000\u0000\u0000\u00b4\u00b7"+
+		"\u0001\u0000\u0000\u0000\u00b5\u00b3\u0001\u0000\u0000\u0000\u00b5\u00b6"+
+		"\u0001\u0000\u0000\u0000\u00b6\u000f\u0001\u0000\u0000\u0000\u00b7\u00b5"+
+		"\u0001\u0000\u0000\u0000\u00b8\u00b9\u0006\b\uffff\uffff\u0000\u00b9\u00d2"+
+		"\u0005\u001a\u0000\u0000\u00ba\u00d2\u0005\u001b\u0000\u0000\u00bb\u00bc"+
+		"\u0005>\u0000\u0000\u00bc\u00c5\u00055\u0000\u0000\u00bd\u00c2\u0003\u0010"+
+		"\b\u0000\u00be\u00bf\u00059\u0000\u0000\u00bf\u00c1\u0003\u0010\b\u0000"+
+		"\u00c0\u00be\u0001\u0000\u0000\u0000\u00c1\u00c4\u0001\u0000\u0000\u0000"+
+		"\u00c2\u00c0\u0001\u0000\u0000\u0000\u00c2\u00c3\u0001\u0000\u0000\u0000"+
+		"\u00c3\u00c6\u0001\u0000\u0000\u0000\u00c4\u00c2\u0001\u0000\u0000\u0000"+
+		"\u00c5\u00bd\u0001\u0000\u0000\u0000\u00c5\u00c6\u0001\u0000\u0000\u0000"+
+		"\u00c6\u00c7\u0001\u0000\u0000\u0000\u00c7\u00d2\u00056\u0000\u0000\u00c8"+
+		"\u00c9\u00055\u0000\u0000\u00c9\u00ca\u0003\u0010\b\u0000\u00ca\u00cb"+
+		"\u00056\u0000\u0000\u00cb\u00d2\u0001\u0000\u0000\u0000\u00cc\u00cd\u0005"+
+		"*\u0000\u0000\u00cd\u00d2\u0003\u0010\b\b\u00ce\u00d2\u0005>\u0000\u0000"+
+		"\u00cf\u00d0\u0005>\u0000\u0000\u00d0\u00d2\u0005;\u0000\u0000\u00d1\u00b8"+
+		"\u0001\u0000\u0000\u0000\u00d1\u00ba\u0001\u0000\u0000\u0000\u00d1\u00bb"+
+		"\u0001\u0000\u0000\u0000\u00d1\u00c8\u0001\u0000\u0000\u0000\u00d1\u00cc"+
+		"\u0001\u0000\u0000\u0000\u00d1\u00ce\u0001\u0000\u0000\u0000\u00d1\u00cf"+
+		"\u0001\u0000\u0000\u0000\u00d2\u00e7\u0001\u0000\u0000\u0000\u00d3\u00d4"+
+		"\n\t\u0000\u0000\u00d4\u00d5\u0005!\u0000\u0000\u00d5\u00e6\u0003\u0010"+
+		"\b\t\u00d6\u00d7\n\u0007\u0000\u0000\u00d7\u00d8\u0007\u0002\u0000\u0000"+
+		"\u00d8\u00e6\u0003\u0010\b\b\u00d9\u00da\n\u0006\u0000\u0000\u00da\u00db"+
+		"\u0007\u0003\u0000\u0000\u00db\u00e6\u0003\u0010\b\u0007\u00dc\u00dd\n"+
+		"\u0005\u0000\u0000\u00dd\u00de\u0007\u0004\u0000\u0000\u00de\u00e6\u0003"+
+		"\u0010\b\u0006\u00df\u00e0\n\u0004\u0000\u0000\u00e0\u00e1\u0007\u0005"+
+		"\u0000\u0000\u00e1\u00e6\u0003\u0010\b\u0005\u00e2\u00e3\n\u0003\u0000"+
+		"\u0000\u00e3\u00e4\u0007\u0006\u0000\u0000\u00e4\u00e6\u0003\u0010\b\u0004"+
+		"\u00e5\u00d3\u0001\u0000\u0000\u0000\u00e5\u00d6\u0001\u0000\u0000\u0000"+
+		"\u00e5\u00d9\u0001\u0000\u0000\u0000\u00e5\u00dc\u0001\u0000\u0000\u0000"+
+		"\u00e5\u00df\u0001\u0000\u0000\u0000\u00e5\u00e2\u0001\u0000\u0000\u0000"+
+		"\u00e6\u00e9\u0001\u0000\u0000\u0000\u00e7\u00e5\u0001\u0000\u0000\u0000"+
+		"\u00e7\u00e8\u0001\u0000\u0000\u0000\u00e8\u0011\u0001\u0000\u0000\u0000"+
+		"\u00e9\u00e7\u0001\u0000\u0000\u0000\u0011\u0015\u001b%ANV`jow\u00ae\u00b5"+
+		"\u00c2\u00c5\u00d1\u00e5\u00e7";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

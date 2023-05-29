@@ -17,13 +17,13 @@ public class ImpBaseListener implements ImpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProg(ImpParser.ProgContext ctx) { }
+	@Override public void enterProgram(ImpParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProg(ImpParser.ProgContext ctx) { }
+	@Override public void exitProgram(ImpParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -41,217 +41,133 @@ public class ImpBaseListener implements ImpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGlobalAssign(ImpParser.GlobalAssignContext ctx) { }
+	@Override public void enterGlobalAssignValue(ImpParser.GlobalAssignValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGlobalAssign(ImpParser.GlobalAssignContext ctx) { }
+	@Override public void exitGlobalAssignValue(ImpParser.GlobalAssignValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArnoldIfElse(ImpParser.ArnoldIfElseContext ctx) { }
+	@Override public void enterArnoldIfElseCheck(ImpParser.ArnoldIfElseCheckContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArnoldIfElse(ImpParser.ArnoldIfElseContext ctx) { }
+	@Override public void exitArnoldIfElseCheck(ImpParser.ArnoldIfElseCheckContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArnoldIf(ImpParser.ArnoldIfContext ctx) { }
+	@Override public void enterArnoldIfCheck(ImpParser.ArnoldIfCheckContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArnoldIf(ImpParser.ArnoldIfContext ctx) { }
+	@Override public void exitArnoldIfCheck(ImpParser.ArnoldIfCheckContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArnoldWhile(ImpParser.ArnoldWhileContext ctx) { }
+	@Override public void enterArnoldWhileCycle(ImpParser.ArnoldWhileCycleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArnoldWhile(ImpParser.ArnoldWhileContext ctx) { }
+	@Override public void exitArnoldWhileCycle(ImpParser.ArnoldWhileCycleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArnoldPrintExp(ImpParser.ArnoldPrintExpContext ctx) { }
+	@Override public void enterArnoldPrintExpression(ImpParser.ArnoldPrintExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArnoldPrintExp(ImpParser.ArnoldPrintExpContext ctx) { }
+	@Override public void exitArnoldPrintExpression(ImpParser.ArnoldPrintExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArnoldAssign(ImpParser.ArnoldAssignContext ctx) { }
+	@Override public void enterArnoldAssignValue(ImpParser.ArnoldAssignValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArnoldAssign(ImpParser.ArnoldAssignContext ctx) { }
+	@Override public void exitArnoldAssignValue(ImpParser.ArnoldAssignValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArnoldDeclare(ImpParser.ArnoldDeclareContext ctx) { }
+	@Override public void enterArnoldDeclareVariable(ImpParser.ArnoldDeclareVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArnoldDeclare(ImpParser.ArnoldDeclareContext ctx) { }
+	@Override public void exitArnoldDeclareVariable(ImpParser.ArnoldDeclareVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArnoldPlus(ImpParser.ArnoldPlusContext ctx) { }
+	@Override public void enterArnoldOp(ImpParser.ArnoldOpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArnoldPlus(ImpParser.ArnoldPlusContext ctx) { }
+	@Override public void exitArnoldOp(ImpParser.ArnoldOpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArnoldMinus(ImpParser.ArnoldMinusContext ctx) { }
+	@Override public void enterArnoldIdExp(ImpParser.ArnoldIdExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArnoldMinus(ImpParser.ArnoldMinusContext ctx) { }
+	@Override public void exitArnoldIdExp(ImpParser.ArnoldIdExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx) { }
+	@Override public void enterArnoldStringExp(ImpParser.ArnoldStringExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx) { }
+	@Override public void exitArnoldStringExp(ImpParser.ArnoldStringExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArnoldDivision(ImpParser.ArnoldDivisionContext ctx) { }
+	@Override public void enterArnoldNumberExp(ImpParser.ArnoldNumberExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArnoldDivision(ImpParser.ArnoldDivisionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArnoldEqual(ImpParser.ArnoldEqualContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArnoldEqual(ImpParser.ArnoldEqualContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArnoldGreater(ImpParser.ArnoldGreaterContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArnoldGreater(ImpParser.ArnoldGreaterContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArnoldOr(ImpParser.ArnoldOrContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArnoldOr(ImpParser.ArnoldOrContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArnoldAnd(ImpParser.ArnoldAndContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArnoldAnd(ImpParser.ArnoldAndContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArnoldString(ImpParser.ArnoldStringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArnoldString(ImpParser.ArnoldStringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx) { }
+	@Override public void exitArnoldNumberExp(ImpParser.ArnoldNumberExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

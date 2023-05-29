@@ -18,7 +18,7 @@ public class ImpBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Im
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitProg(ImpParser.ProgContext ctx) { return visitChildren(ctx); }
+	@Override public T visitProgram(ImpParser.ProgramContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -32,126 +32,77 @@ public class ImpBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Im
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitGlobalAssign(ImpParser.GlobalAssignContext ctx) { return visitChildren(ctx); }
+	@Override public T visitGlobalAssignValue(ImpParser.GlobalAssignValueContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArnoldIfElse(ImpParser.ArnoldIfElseContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArnoldIfElseCheck(ImpParser.ArnoldIfElseCheckContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArnoldIf(ImpParser.ArnoldIfContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArnoldIfCheck(ImpParser.ArnoldIfCheckContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArnoldWhile(ImpParser.ArnoldWhileContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArnoldWhileCycle(ImpParser.ArnoldWhileCycleContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArnoldPrintExp(ImpParser.ArnoldPrintExpContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArnoldPrintExpression(ImpParser.ArnoldPrintExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArnoldAssign(ImpParser.ArnoldAssignContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArnoldAssignValue(ImpParser.ArnoldAssignValueContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArnoldDeclare(ImpParser.ArnoldDeclareContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArnoldDeclareVariable(ImpParser.ArnoldDeclareVariableContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArnoldPlus(ImpParser.ArnoldPlusContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArnoldOp(ImpParser.ArnoldOpContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArnoldMinus(ImpParser.ArnoldMinusContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArnoldIdExp(ImpParser.ArnoldIdExpContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArnoldStringExp(ImpParser.ArnoldStringExpContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArnoldDivision(ImpParser.ArnoldDivisionContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitArnoldEqual(ImpParser.ArnoldEqualContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitArnoldGreater(ImpParser.ArnoldGreaterContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitArnoldOr(ImpParser.ArnoldOrContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitArnoldAnd(ImpParser.ArnoldAndContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitArnoldString(ImpParser.ArnoldStringContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArnoldNumberExp(ImpParser.ArnoldNumberExpContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
