@@ -2,114 +2,110 @@ grammar ArnoldC;
 
 program             : arnoldIni;
 
-arnoldIni           : STARTMAIN arnoldCom* ENDMAIN;
+arnoldIni           : ARNOLDSTARTMAIN arnoldCom* ARNOLDENDMAIN;
 
-arnoldCom           : IF expression arnoldCom ELSE arnoldCom ENDIF                                                         # arnoldIfElse
-                    | IF expression arnoldCom ENDIF                                                                        # arnoldIf
-                    | WHILE expression arnoldCom+ ENDWHILE                                                                  # arnoldWhile
-                    | PRINT expression                                                                                     # arnoldPrintExp
-                    | ASSIGNVARIABLE ID SETVALUE expression+ ENDASSIGNVARIABLE                                             # arnoldAssign
-                    | DECLARE ID SETINITIALVALUE expression                                                                # arnoldDeclare
+arnoldCom           : ARNOLDIF operand arnoldCom ARNOLDELSE arnoldCom ARNOLDENDIF                                      # arnoldIfElse
+                    | ARNOLDIF operand arnoldCom ARNOLDENDIF                                                     # arnoldIf
+                    | ARNOLDWHILE operand arnoldCom+ ARNOLDENDWHILE                                              # arnoldWhile
+                    | ARNOLDPRINT (STRING | ID)                                                            # arnoldPrintExp
+                    | ARNOLDASSIGNVARIABLE ID ARNOLDSETVALUE operand operations+ ARNOLDENDASSIGNVARIABLE               # arnoldAssign
+                    | ARNOLDDECLARE ID ARNOLDSETINITIALVALUE operand                                             # arnoldDeclare
                     ;
 
-expression          : ID                                # arnoldIdexpr
+operations          : ARNOLDPLUSOPERATOR operand           # arnoldPlus
+                    | ARNOLDMINUSOPERATOR operand          # arnoldMinus
+                    | ARNOLDMULTIPLICATIONOPERATOR operand # arnoldMultiplication
+                    | ARNOLDDIVISIONOPERATOR operand       # arnoldDivision
+                    | ARNOLDEQUALTO operand                # arnoldEqual
+                    | ARNOLDGREATERTHAN operand            # arnoldGreater
+                    | ARNOLDOR operand                     # arnoldOr
+                    | ARNOLDAND operand                    # arnoldAnd
+                    ;
+
+operand             : ID                                # arnoldIdexpr
                     | STRING                            # arnoldString
                     | FLOAT                             # arnoldNumberexpr
-                    | AT BOOL                           # arnoldBoolExp
-                    | PLUSOPERATOR expression           # arnoldPlus
-                    | MINUSOPERATOR expression          # arnoldMinus
-                    | MULTIPLICATIONOPERATOR expression # arnoldMultiplication
-                    | DIVISIONOPERATOR expression       # arnoldDivision
-                    | EQUALTO expression                # arnoldEqual
-                    | GREATERTHAN expression            # arnoldGreater
-                    | OR expression                     # arnoldOr
-                    | AND expression                    # arnoldAnd
+                    | ARNOLDAT ARNOLDBOOL                           # arnoldBoolExp
                     ;
 
-STARTMAIN           : 'IT\'S SHOWTIME';
+ARNOLDSTARTMAIN           : 'IT\'S SHOWTIME';
 
-ENDMAIN             : 'YOU HAVE BEEN TERMINATED';
+ARNOLDENDMAIN             : 'YOU HAVE BEEN TERMINATED';
 
-AT                  : '@';
+ARNOLDAT                  : '@';
 
-BOOL                : TRUE
-                    | FALSE
-                    ;
+ARNOLDBOOL                : ARNOLDTRUE
+                          | ARNOLDFALSE
+                          ;
 
-TRUE                : 'NO PROBLEMO';
+ARNOLDTRUE                : 'NO PROBLEMO';
 
-FALSE               : 'I LIED';
+ARNOLDFALSE               : 'I LIED';
 
-PLUSOPERATOR        : 'GET UP';
+ARNOLDPLUSOPERATOR        : 'GET UP';
 
-MINUSOPERATOR       : 'GET DOWN';
+ARNOLDMINUSOPERATOR       : 'GET DOWN';
 
-MULTIPLICATIONOPERATOR  : 'YOU\'RE FIRED';
+ARNOLDMULTIPLICATIONOPERATOR  : 'YOU\'RE FIRED';
 
-DIVISIONOPERATOR        : 'HE HAD TO SPLIT';
+ARNOLDDIVISIONOPERATOR        : 'HE HAD TO SPLIT';
 
-EQUALTO                 : 'YOU ARE NOT YOU YOU ARE ME';
+ARNOLDEQUALTO                 : 'YOU ARE NOT YOU YOU ARE ME';
 
-GREATERTHAN
+ARNOLDGREATERTHAN
     : 'LET OFF SOME STEAM BENNET'
     ;
 
-OR
+ARNOLDOR
     : 'CONSIDER THAT A DIVORCE'
     ;
 
-AND
+ARNOLDAND
     : 'KNOCK KNOCK'
     ;
 
-PRINT
+ARNOLDPRINT
     : 'TALK TO THE HAND'
     ;
 
-DECLARE
+ARNOLDDECLARE
     : 'HEY CHRISTMAS TREE'
     ;
 
-SETINITIALVALUE
+ARNOLDSETINITIALVALUE
     : 'YOU SET US UP'
     ;
 
-ASSIGNVARIABLE
+ARNOLDASSIGNVARIABLE
     : 'GET TO THE CHOPPER'
     ;
 
-SETVALUE
+ARNOLDSETVALUE
     : 'HERE IS MY INVITATION'
     ;
 
-ENDASSIGNVARIABLE
+ARNOLDENDASSIGNVARIABLE
     : 'ENOUGH TALK'
     ;
 
-IF
+ARNOLDIF
     : 'BECAUSE I\'M GOING TO SAY PLEASE'
     ;
 
-ELSE
+ARNOLDELSE
     : 'BULLSHIT'
     ;
 
-ENDIF
+ARNOLDENDIF
     : 'YOU HAVE NO RESPECT FOR LOGIC'
     ;
 
-WHILE
+ARNOLDWHILE
     : 'STICK AROUND'
     ;
 
-ENDWHILE
+ARNOLDENDWHILE
     : 'CHILL'
-    ;
-
-ID  : [a-zA-Z]+[0-9]*[a-zA-Z]*
-    ;
-
-WS  : [ \r\n\t]+ -> channel(HIDDEN)
     ;
 
 STRING : '"' STRCHAR* '"';
@@ -117,9 +113,11 @@ STRING : '"' STRCHAR* '"';
 fragment STRCHAR : ~["\\] | ESC;
 fragment ESC : '\\' [btnfr"'\\];
 
-FLOAT                : INT   |   (INT | '-''0')'.'DIGIT+   ;
-fragment INT         :NAT    |   '-'POS;
-fragment NAT         :'0'    |   POS;
-fragment POS         :POSDIGIT DIGIT*;
-fragment DIGIT       :   '0' |   POSDIGIT;
-fragment POSDIGIT    :   [1-9];
+FLOAT                : ARNOLDINT   |   (ARNOLDINT | '-''0')'.'ARNOLDDIGIT+   ;
+fragment ARNOLDINT         :ARNOLDNAT    |   '-'ARNOLDPOS;
+fragment ARNOLDNAT         :'0'    |   POS;
+fragment ARNOLDPOS         :POSDIGIT DIGIT*;
+fragment ARNOLDDIGIT       :   '0' |   POSDIGIT;
+fragment ARNOLDPOSDIGIT    :   [1-9];
+
+

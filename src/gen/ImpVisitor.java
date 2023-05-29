@@ -231,87 +231,87 @@ public interface ImpVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArnoldDeclare(ImpParser.ArnoldDeclareContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code arnoldIdexpr}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code arnoldString}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArnoldString(ImpParser.ArnoldStringContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code arnoldNumberexpr}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code arnoldBoolExp}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArnoldBoolExp(ImpParser.ArnoldBoolExpContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code arnoldPlus}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitArnoldPlus(ImpParser.ArnoldPlusContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code arnoldMinus}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitArnoldMinus(ImpParser.ArnoldMinusContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code arnoldMultiplication}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code arnoldDivision}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitArnoldDivision(ImpParser.ArnoldDivisionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code arnoldEqual}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitArnoldEqual(ImpParser.ArnoldEqualContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code arnoldGreater}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitArnoldGreater(ImpParser.ArnoldGreaterContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code arnoldOr}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitArnoldOr(ImpParser.ArnoldOrContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code arnoldAnd}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitArnoldAnd(ImpParser.ArnoldAndContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code arnoldIdexpr}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code arnoldString}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArnoldString(ImpParser.ArnoldStringContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code arnoldNumberexpr}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code arnoldBoolExp}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArnoldBoolExp(ImpParser.ArnoldBoolExpContext ctx);
 }

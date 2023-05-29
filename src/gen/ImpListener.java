@@ -384,147 +384,147 @@ public interface ImpListener extends ParseTreeListener {
 	 */
 	void exitArnoldDeclare(ImpParser.ArnoldDeclareContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arnoldIdexpr}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldIdexpr}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arnoldString}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldString(ImpParser.ArnoldStringContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldString}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldString(ImpParser.ArnoldStringContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arnoldNumberexpr}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldNumberexpr}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arnoldBoolExp}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterArnoldBoolExp(ImpParser.ArnoldBoolExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arnoldBoolExp}
-	 * labeled alternative in {@link ImpParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitArnoldBoolExp(ImpParser.ArnoldBoolExpContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code arnoldPlus}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void enterArnoldPlus(ImpParser.ArnoldPlusContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code arnoldPlus}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void exitArnoldPlus(ImpParser.ArnoldPlusContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code arnoldMinus}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void enterArnoldMinus(ImpParser.ArnoldMinusContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code arnoldMinus}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void exitArnoldMinus(ImpParser.ArnoldMinusContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code arnoldMultiplication}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void enterArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code arnoldMultiplication}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void exitArnoldMultiplication(ImpParser.ArnoldMultiplicationContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code arnoldDivision}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void enterArnoldDivision(ImpParser.ArnoldDivisionContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code arnoldDivision}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void exitArnoldDivision(ImpParser.ArnoldDivisionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code arnoldEqual}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void enterArnoldEqual(ImpParser.ArnoldEqualContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code arnoldEqual}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void exitArnoldEqual(ImpParser.ArnoldEqualContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code arnoldGreater}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void enterArnoldGreater(ImpParser.ArnoldGreaterContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code arnoldGreater}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void exitArnoldGreater(ImpParser.ArnoldGreaterContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code arnoldOr}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void enterArnoldOr(ImpParser.ArnoldOrContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code arnoldOr}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void exitArnoldOr(ImpParser.ArnoldOrContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code arnoldAnd}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void enterArnoldAnd(ImpParser.ArnoldAndContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code arnoldAnd}
-	 * labeled alternative in {@link ImpParser#expression}.
+	 * labeled alternative in {@link ImpParser#operations}.
 	 * @param ctx the parse tree
 	 */
 	void exitArnoldAnd(ImpParser.ArnoldAndContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code arnoldIdexpr}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 */
+	void enterArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code arnoldIdexpr}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 */
+	void exitArnoldIdexpr(ImpParser.ArnoldIdexprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code arnoldString}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 */
+	void enterArnoldString(ImpParser.ArnoldStringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code arnoldString}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 */
+	void exitArnoldString(ImpParser.ArnoldStringContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code arnoldNumberexpr}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 */
+	void enterArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code arnoldNumberexpr}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 */
+	void exitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code arnoldBoolExp}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 */
+	void enterArnoldBoolExp(ImpParser.ArnoldBoolExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code arnoldBoolExp}
+	 * labeled alternative in {@link ImpParser#operand}.
+	 * @param ctx the parse tree
+	 */
+	void exitArnoldBoolExp(ImpParser.ArnoldBoolExpContext ctx);
 }
