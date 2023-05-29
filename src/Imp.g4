@@ -1,7 +1,7 @@
 grammar Imp;
-prog : (fun)* com EOF ;
+prog : (fun)* global*  com EOF ;
 arnoldIni           : ARNOLDSTARTMAIN arnoldCom* ARNOLDENDMAIN;
-
+global: GLOBAL ID ASSIGN exp SEMICOLON                                                                     # globalAssign;
 arnoldCom           : ARNOLDIF operand arnoldCom ARNOLDELSE arnoldCom ARNOLDENDIF                          # arnoldIfElse
                     | ARNOLDIF operand arnoldCom ARNOLDENDIF                                               # arnoldIf
                     | ARNOLDWHILE operand arnoldCom+ ARNOLDENDWHILE                                        # arnoldWhile
@@ -110,7 +110,7 @@ fun : FUN ID LPAR (ID (COMMA ID)*)* RPAR LBRACE (com SEMICOLON)? RETURN exp RBRA
     ;
 com : IF LPAR exp RPAR THEN LBRACE com RBRACE ELSE LBRACE com RBRACE    # if
     | ID ASSIGN exp                                                     # assign
-    | GLOBAL ID ASSIGN exp                                              # globalAssign
+    | ID DOTG ASSIGN exp                                                # varGlobalAssign
     | SKIPP                                                             # skip
     | com SEMICOLON com                                                 # seq
     | WHILE LPAR exp RPAR LBRACE com RBRACE                             # while

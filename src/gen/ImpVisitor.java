@@ -23,6 +23,13 @@ public interface ImpVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArnoldIni(ImpParser.ArnoldIniContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code globalAssign}
+	 * labeled alternative in {@link ImpParser#global}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGlobalAssign(ImpParser.GlobalAssignContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code arnoldIfElse}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
@@ -155,12 +162,12 @@ public interface ImpVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFun(ImpParser.FunContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code globalAssign}
+	 * Visit a parse tree produced by the {@code varGlobalAssign}
 	 * labeled alternative in {@link ImpParser#com}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGlobalAssign(ImpParser.GlobalAssignContext ctx);
+	T visitVarGlobalAssign(ImpParser.VarGlobalAssignContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code nd}
 	 * labeled alternative in {@link ImpParser#com}.

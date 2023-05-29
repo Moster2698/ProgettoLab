@@ -28,6 +28,18 @@ public interface ImpListener extends ParseTreeListener {
 	 */
 	void exitArnoldIni(ImpParser.ArnoldIniContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code globalAssign}
+	 * labeled alternative in {@link ImpParser#global}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobalAssign(ImpParser.GlobalAssignContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code globalAssign}
+	 * labeled alternative in {@link ImpParser#global}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobalAssign(ImpParser.GlobalAssignContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code arnoldIfElse}
 	 * labeled alternative in {@link ImpParser#arnoldCom}.
 	 * @param ctx the parse tree
@@ -254,17 +266,17 @@ public interface ImpListener extends ParseTreeListener {
 	 */
 	void exitFun(ImpParser.FunContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code globalAssign}
+	 * Enter a parse tree produced by the {@code varGlobalAssign}
 	 * labeled alternative in {@link ImpParser#com}.
 	 * @param ctx the parse tree
 	 */
-	void enterGlobalAssign(ImpParser.GlobalAssignContext ctx);
+	void enterVarGlobalAssign(ImpParser.VarGlobalAssignContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code globalAssign}
+	 * Exit a parse tree produced by the {@code varGlobalAssign}
 	 * labeled alternative in {@link ImpParser#com}.
 	 * @param ctx the parse tree
 	 */
-	void exitGlobalAssign(ImpParser.GlobalAssignContext ctx);
+	void exitVarGlobalAssign(ImpParser.VarGlobalAssignContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code nd}
 	 * labeled alternative in {@link ImpParser#com}.

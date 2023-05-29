@@ -59,6 +59,17 @@ public class IntImp extends ImpBaseVisitor<Value> {
     }
 
     @Override
+    public Value visitVarGlobalAssign(ImpParser.VarGlobalAssignContext ctx) {
+        if(!globalVars.contains(ctx.ID().getText())){
+            System.err.println("Global var " + ctx.ID().getText() + " already defined");
+            System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
+            System.exit(1);
+        }
+        globalVars.update(ctx.ID().getText(), visitExp(ctx.exp()));
+        return ComValue.INSTANCE;
+    }
+
+    @Override
     public Value visitGlobalAssign(ImpParser.GlobalAssignContext ctx) {
         if(globalVars.contains(ctx.ID().getText())){
             System.err.println("Global var " + ctx.ID().getText() + " already defined");
@@ -147,6 +158,9 @@ public class IntImp extends ImpBaseVisitor<Value> {
 
     @Override
     public ComValue visitProg(ImpParser.ProgContext ctx) {
+        for(int i = 0; i < ctx.global().size(); i++){
+            visit(ctx.global(i));
+        }
         for(ImpParser.FunContext f : ctx.fun())
             visit(f);
         return visitCom(ctx.com());

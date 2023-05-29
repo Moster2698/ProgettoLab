@@ -41,6 +41,18 @@ public class ImpBaseListener implements ImpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGlobalAssign(ImpParser.GlobalAssignContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGlobalAssign(ImpParser.GlobalAssignContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterArnoldIfElse(ImpParser.ArnoldIfElseContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -269,13 +281,13 @@ public class ImpBaseListener implements ImpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGlobalAssign(ImpParser.GlobalAssignContext ctx) { }
+	@Override public void enterVarGlobalAssign(ImpParser.VarGlobalAssignContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGlobalAssign(ImpParser.GlobalAssignContext ctx) { }
+	@Override public void exitVarGlobalAssign(ImpParser.VarGlobalAssignContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
