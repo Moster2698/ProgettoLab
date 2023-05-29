@@ -281,11 +281,6 @@ public class IntImp extends ImpBaseVisitor<Value> {
 
     /*ArnolC program*/
     @Override
-    public Value visitProgram(ImpParser.ProgramContext ctx) {
-        return visit(ctx.arnoldIni());
-    }
-
-    @Override
     public ComValue visitArnoldIni(ImpParser.ArnoldIniContext ctx) {
         int i=0;
         for(i = 0; i < ctx.arnoldCom().size() - 1; i++){
@@ -303,14 +298,14 @@ public class IntImp extends ImpBaseVisitor<Value> {
 
     @Override
     public ComValue visitArnoldIf(ImpParser.ArnoldIfContext ctx) {
-        if(visitBoolExp(ctx.operand()))
+        if(visitFloatExp(ctx.operand()) == 1f)
             return visitArnoldCom(ctx.arnoldCom());
         return ComValue.INSTANCE;
     }
 
     @Override
     public ComValue visitArnoldWhile(ImpParser.ArnoldWhileContext ctx) {
-        if (!visitBoolExp(ctx.operand()))
+        if (visitFloatExp(ctx.operand()) == 0f)
             return ComValue.INSTANCE;
         for (int i = 0; i < ctx.arnoldCom().size(); i++) {
             visitArnoldCom(ctx.arnoldCom(i));
@@ -336,8 +331,8 @@ public class IntImp extends ImpBaseVisitor<Value> {
     public ComValue visitArnoldAssign(ImpParser.ArnoldAssignContext ctx) {
         String id = ctx.ID().getText();
         stack.push(visitFloatExp(ctx.operand()));
-        for (int i = 0; i < ctx.operations().size(); i++) {
-            visit(ctx.operations(i));
+        for (int i = 0; i < ctx.arnoldOperations().size(); i++) {
+            visit(ctx.arnoldOperations(i));
         }
         Float result = stack.pop();
         arnoldConf.put(id, new FloatValue(result));
@@ -364,18 +359,19 @@ public class IntImp extends ImpBaseVisitor<Value> {
 
     @Override
     public Value visitArnoldString(ImpParser.ArnoldStringContext ctx) {
-        return new StringValue(StringEscapeUtils.unescapeJava(ctx.STRING().getText().substring(1,
-                ctx.STRING().getText().length() - 1)));
+        return new StringValue(StringEscapeUtils.unescapeJava(ctx.ARNOLDSTRING().getText().substring(1,
+                ctx.ARNOLDSTRING().getText().length() - 1)));
     }
 
     @Override
     public FloatValue visitArnoldNumberexpr(ImpParser.ArnoldNumberexprContext ctx) {
-        return new FloatValue(Float.parseFloat(ctx.FLOAT().getText()));
+        return new FloatValue(Float.parseFloat(ctx.ARNOLDFLOAT().getText()));
     }
 
     @Override
-    public BoolValue visitArnoldBoolExp(ImpParser.ArnoldBoolExpContext ctx) {
-        return new BoolValue(Boolean.parseBoolean(ctx.BOOL().getText()));
+    public FloatValue visitArnoldBoolExp(ImpParser.ArnoldBoolExpContext ctx) {
+        String boolctx = ctx.ARNOLDBOOL().getText();
+        return boolctx.compareTo("NO PROBLEMO") == 0 ? new FloatValue(1f) : new FloatValue(0f);
     }
 
     @Override
@@ -422,6 +418,7 @@ public class IntImp extends ImpBaseVisitor<Value> {
     public FloatValue visitArnoldGreater(ImpParser.ArnoldGreaterContext ctx) {
         float left = stack.pop();
         float right = visitFloatExp(ctx.operand());
+        stack.push(left > right ? 1f : 0f);
         if (left > right)
             return new FloatValue(1F);
         return new FloatValue(0F);

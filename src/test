@@ -1,24 +1,24 @@
-fun annakarenina(){
-	 ${
-     IT'S SHOWTIME
-       HEY CHRISTMAS TREE isLessThan10
-         YOU SET US UP @NO PROBLEMO
-       HEY CHRISTMAS TREE n
-         YOU SET US UP 0.0
-       STICK AROUND isLessThan10
-         GET TO THE CHOPPER n
-           HERE IS MY INVITATION n
-           GET UP 1.0
-         ENOUGH TALK
-         TALK TO THE HAND n
-         GET TO THE CHOPPER isLessThan10
-           HERE IS MY INVITATION 10.0
-           LET OFF SOME STEAM BENNET n
-         ENOUGH TALK
-       CHILL
-     YOU HAVE BEEN TERMINATED
-     }$;
+fun AnnaKarenina(){
+	${
+    IT'S SHOWTIME
+      HEY CHRISTMAS TREE isLessThan10
+        YOU SET US UP @NO PROBLEMO
+      HEY CHRISTMAS TREE n
+        YOU SET US UP 0.0
+      STICK AROUND isLessThan10
+        GET TO THE CHOPPER n
+          HERE IS MY INVITATION n
+          GET UP 1.0
+        ENOUGH TALK
+        TALK TO THE HAND n
+        GET TO THE CHOPPER isLessThan10
+          HERE IS MY INVITATION 10.0
+          LET OFF SOME STEAM BENNET n
+        ENOUGH TALK
+      CHILL
+    YOU HAVE BEEN TERMINATED
+    }$;
 	return 42
 	}
 
-out(annakarenina())
+out(AnnaKarenina())
