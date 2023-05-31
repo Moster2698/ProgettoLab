@@ -1,19 +1,23 @@
 package value;
 
 import java.util.Set;
-import gen.*;
+import generation.HaveFunAndArnoldCParser;
+
 public class FunValue extends Value{
     //Nome della funzione
     private final String funId;
     //Lista dei parametri della funzione
     private final Set<String> parameters;
     //Comando della funzione
-    private final ImpParser.ComContext com;
+    private final HaveFunAndArnoldCParser.ComContext com;
 
     //Valore di Ritorno della funzione
-    private final ImpParser.ExpContext ret;
+    private final HaveFunAndArnoldCParser.ExpContext ret;
 
-    public FunValue(String funId, Set<String> param, ImpParser.ComContext com, ImpParser.ExpContext ret){
+    public FunValue(String funId,
+                    Set<String> param,
+                    HaveFunAndArnoldCParser.ComContext com,
+                    HaveFunAndArnoldCParser.ExpContext ret){
         this.funId = funId;
         this.parameters = param;
         this.com = com;
@@ -32,11 +36,11 @@ public class FunValue extends Value{
         return parameters;
     }
 
-    public ImpParser.ComContext getCom() {
+    public HaveFunAndArnoldCParser.ComContext getCom() {
         return com;
     }
 
-    public ImpParser.ExpContext getRet() {
+    public HaveFunAndArnoldCParser.ExpContext getRet() {
         return ret;
     }
     @Override

@@ -1,19 +1,6 @@
-fun AnnaKarenina(){
-	${
-	IT'S SHOWTIME
-	  HEY CHRISTMAS TREE a
-	  YOU SET US UP 0.0
-	  HEY CHRISTMAS TREE b
-	  YOU SET US UP 17.4
-	  GET TO THE CHOPPER a
-	  HERE IS MY INVITATION 4.0
-	  GET UP b
-	  YOU'RE FIRED 2.0
-	  ENOUGH TALK
-	  TALK TO THE HAND a
-	YOU HAVE BEEN TERMINATED
-	}$;
-	return 42
-	}
+fun anna() {
+  A = 3.0/2.0;
+  return A
+}
 
-out(AnnaKarenina())
+out(anna())

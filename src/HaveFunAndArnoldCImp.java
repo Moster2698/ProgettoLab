@@ -8,9 +8,8 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import generation.*;
-public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
+public class HaveFunAndArnoldCImp extends HaveFunAndArnoldCBaseVisitor<Value> {
 
-    /*HaveFun*/
     private final LinkedList<Conf> vars;
     private final Conf globalVars;
     private final Set<FunValue> functions = new HashSet<>();
@@ -19,7 +18,7 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
 
     private final Stack<Float> stack = new Stack<>();
 
-    public IntImp(Conf conf) {
+    public HaveFunAndArnoldCImp(Conf conf) {
         this.globalVars = conf;
         vars = new LinkedList<>();
         vars.add(new Conf());
@@ -29,18 +28,13 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
     public ComValue visitFun(HaveFunAndArnoldCParser.FunContext ctx) {
         List<TerminalNode> ids = ctx.ID();
         String funID = ids.get(0).getText();
-        //Rimuovo il nome della funzione
         ids.remove(ids.get(0));
-
         Set<String> params = new HashSet<>();
-        //Controllo se ci sono altri parametri
-
         if(ids.size() != 0){
             for(int i = 0; i < ids.size(); i++){
                 TerminalNode param = ids.get(i);
-                //Se il parametro esiste già ritorna un errore
                 if(params.contains(param.getText())){
-                    System.err.println("Parameter name " + param.getText() + " clashes with previous parameters");
+                    System.err.println("Il parametro " + param.getText() + " non è corretto");
                     System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
                     System.exit(1);
                 }
@@ -49,7 +43,7 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
         }
         FunValue fun = new FunValue(funID, params, ctx.com(), ctx.exp());
         if(!functions.add(fun)){
-            System.err.println("Fun " + funID + " already defined");
+            System.err.println("la funzione " + funID + " è giè definita");
             System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
             System.exit(1);
         }
@@ -60,7 +54,7 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
     @Override
     public Value visitVarGlobalAssign(HaveFunAndArnoldCParser.VarGlobalAssignContext ctx) {
         if(!globalVars.contains(ctx.ID().getText())){
-            System.err.println("Global var " + ctx.ID().getText() + " already defined");
+            System.err.println("La variabile globale " + ctx.ID().getText() + " è già definita");
             System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
             System.exit(1);
         }
@@ -71,7 +65,7 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
     @Override
     public Value visitGlobalAssignValue(HaveFunAndArnoldCParser.GlobalAssignValueContext ctx) {
         if(globalVars.contains(ctx.ID().getText())){
-            System.err.println("Global var " + ctx.ID().getText() + " already defined");
+            System.err.println("La variabile globale " + ctx.ID().getText() + " è già definita");
             System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
             System.exit(1);
         }
@@ -85,7 +79,7 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
         if(val != null){
             return val;
         }
-        System.err.println("Global var " + ctx.ID().getText() + " does not exist");
+        System.err.println("La variabile globale " + ctx.ID().getText() + " non esiste");
         System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
         System.exit(1);
         return null;
@@ -273,7 +267,7 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
         String id = ctx.ID().getText();
 
         if(!vars.getLast().contains(id)) {
-            System.err.println("Variable " + id + " used but never instantiated");
+            System.err.println("La variabile " + id + " usata ma non inizializzata");
             System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
 
             System.exit(1);
@@ -284,18 +278,14 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
 
     @Override
     public Value visitProgram(HaveFunAndArnoldCParser.ProgramContext ctx) {
-        /*visita di tutte le variabili globali*/
         for(int i = 0; i < ctx.globalEnv().size(); i++){
             visit(ctx.globalEnv(i));
         }
-        /*visita di tutte le funzioni*/
         for(HaveFunAndArnoldCParser.FunContext f : ctx.fun())
             visit(f);
-
         return visitCom(ctx.com());
     }
 
-    /*ArnolC program*/
     @Override
     public ComValue visitArnoldIni(HaveFunAndArnoldCParser.ArnoldIniContext ctx) {
         int i=0;
@@ -314,14 +304,14 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
 
     @Override
     public ComValue visitArnoldIfCheck(HaveFunAndArnoldCParser.ArnoldIfCheckContext ctx) {
-        if(visitFloatExp(ctx.operand()) == 1f)
+        if(visitFloatExp(ctx.operand()) == 1F)
             return visitArnoldCom(ctx.arnoldCom());
         return ComValue.INSTANCE;
     }
 
     @Override
     public ComValue visitArnoldWhileCycle(HaveFunAndArnoldCParser.ArnoldWhileCycleContext ctx) {
-        if (visitFloatExp(ctx.operand()) == 0f)
+        if (visitFloatExp(ctx.operand()) == 0F)
             return ComValue.INSTANCE;
         for (int i = 0; i < ctx.arnoldCom().size(); i++) {
             visitArnoldCom(ctx.arnoldCom(i));
@@ -435,7 +425,7 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
         for(FunValue fun: functions) {
             if (fun.getFunId().equals(id)) {
                 if (params.size() != fun.getParamsLength()) {
-                    System.err.println("Function " + fun + " called with the wrong number of arguments");
+                    System.err.println("La funzione " + fun + " è stata chiamata con un numero errato di argomenti");
                     System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
                     System.exit(1);
                 }
@@ -455,7 +445,7 @@ public class IntImp extends HaveFunAndArnoldCBaseVisitor<Value> {
                 return returnVal;
             }
         }
-        System.err.println("Function " + id + " used but never declared");
+        System.err.println("La funzione " + id + " usata ma non dichiarata");
         System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
         System.exit(1);
         return null;

@@ -1,9 +1,7 @@
-import gen.ImpLexer;
-import gen.ImpParser;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
+import generation.*;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,13 +13,28 @@ public class Main {
         InputStream inputStream = classloader.getResourceAsStream(args[0]);
         CharStream charStream = CharStreams.fromStream(inputStream);
 
-        ImpLexer lexer = new ImpLexer(charStream);
+        HaveFunAndArnoldCLexer lexer = new HaveFunAndArnoldCLexer(charStream);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        ImpParser parser = new ImpParser(tokenStream);
+        HaveFunAndArnoldCParser parser = new HaveFunAndArnoldCParser(tokenStream);
 
-        ParseTree tree = parser.program();
+        parser.addErrorListener(new BaseErrorListener() {
+            @Override
+            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol,
+                                    int line,
+                                    int charPositionInLine,
+                                    String msg,
+                                    RecognitionException e)
+                    throws ParseCancellationException {
+                throw new ParseCancellationException("Errore di sintassi");
+            }
+        });
 
-        IntImp interpreter = new IntImp(new Conf());
-        interpreter.visit(tree);
+        try {
+            ParseTree tree = parser.program();
+            HaveFunAndArnoldCImp interpreter = new HaveFunAndArnoldCImp(new Conf());
+            interpreter.visit(tree);
+        } catch (ParseCancellationException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

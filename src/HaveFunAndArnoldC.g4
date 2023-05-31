@@ -1,4 +1,5 @@
 grammar HaveFunAndArnoldC;
+
 program             : (fun)* globalEnv*  com EOF
                     ;
 arnoldIni           : ARNOLDSTARTMAIN arnoldCom* ARNOLDENDMAIN
