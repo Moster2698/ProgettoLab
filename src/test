@@ -1,6 +1,18 @@
-fun anna() {
-  A = 3.0/2.0;
-  return A
+fun f(x) {
+  g = 10;
+  f.g = f.g + g;
+  return g(g) + g(x)
 }
 
-out(anna())
+fun g(f) {
+  if (f > 0) then { ret = 1 + g(f - 1) }
+  else { ret = 13 };
+
+  return ret
+}
+
+global f = 50;
+f = 5;
+g = 3;
+out(g(f) + f(g) + f(f) + g(g));
+out(f.g)

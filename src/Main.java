@@ -25,7 +25,8 @@ public class Main {
                                     String msg,
                                     RecognitionException e)
                     throws ParseCancellationException {
-                throw new ParseCancellationException("Errore di sintassi");
+                System.err.println("Errore di sintassi");
+                System.exit(1);
             }
         });
 

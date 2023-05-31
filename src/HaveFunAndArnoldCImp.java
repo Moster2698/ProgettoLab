@@ -43,7 +43,7 @@ public class HaveFunAndArnoldCImp extends HaveFunAndArnoldCBaseVisitor<Value> {
         }
         FunValue fun = new FunValue(funID, params, ctx.com(), ctx.exp());
         if(!functions.add(fun)){
-            System.err.println("la funzione " + funID + " è giè definita");
+            System.err.println("la funzione " + funID + " è già definita");
             System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
             System.exit(1);
         }
@@ -356,7 +356,7 @@ public class HaveFunAndArnoldCImp extends HaveFunAndArnoldCBaseVisitor<Value> {
     public FloatValue visitArnoldIdExp(HaveFunAndArnoldCParser.ArnoldIdExpContext ctx) {
         String id = ctx.ID().getText();
         if(arnoldConf.get(id) == null){
-            System.err.println("Variabile "+ id + "utilizzata ma non inizializzata");
+            System.err.println("La variabile " + id + " usata ma non inizializzata");
             System.err.println("@"+ ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
             System.exit(1);
         }
@@ -425,7 +425,7 @@ public class HaveFunAndArnoldCImp extends HaveFunAndArnoldCBaseVisitor<Value> {
         for(FunValue fun: functions) {
             if (fun.getFunId().equals(id)) {
                 if (params.size() != fun.getParamsLength()) {
-                    System.err.println("La funzione " + fun + " è stata chiamata con un numero errato di argomenti");
+                    System.err.println("La funzione " + fun.getFunId() + " è stata chiamata con un numero errato di argomenti");
                     System.err.println("@" + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine());
                     System.exit(1);
                 }
