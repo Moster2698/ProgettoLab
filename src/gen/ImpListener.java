@@ -64,6 +64,18 @@ public interface ImpListener extends ParseTreeListener {
 	 */
 	void exitSkip(ImpParser.SkipContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code arnoldInit}
+	 * labeled alternative in {@link ImpParser#com}.
+	 * @param ctx the parse tree
+	 */
+	void enterArnoldInit(ImpParser.ArnoldInitContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code arnoldInit}
+	 * labeled alternative in {@link ImpParser#com}.
+	 * @param ctx the parse tree
+	 */
+	void exitArnoldInit(ImpParser.ArnoldInitContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code while}
 	 * labeled alternative in {@link ImpParser#com}.
 	 * @param ctx the parse tree
@@ -279,4 +291,188 @@ public interface ImpListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitId(ImpParser.IdContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ImpParser#program}.
+	 * @param ctx the parse tree
+	 */
+	void enterProgram(ImpParser.ProgramContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ImpParser#program}.
+	 * @param ctx the parse tree
+	 */
+	void exitProgram(ImpParser.ProgramContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ImpParser#arnoldIni}.
+	 * @param ctx the parse tree
+	 */
+	void enterArnoldIni(ImpParser.ArnoldIniContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ImpParser#arnoldIni}.
+	 * @param ctx the parse tree
+	 */
+	void exitArnoldIni(ImpParser.ArnoldIniContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ImpParser#coms}.
+	 * @param ctx the parse tree
+	 */
+	void enterComs(ImpParser.ComsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ImpParser#coms}.
+	 * @param ctx the parse tree
+	 */
+	void exitComs(ImpParser.ComsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code varexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarexpr(ImpParser.VarexprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code varexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarexpr(ImpParser.VarexprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code numberexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumberexpr(ImpParser.NumberexprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numberexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumberexpr(ImpParser.NumberexprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code trueexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterTrueexpr(ImpParser.TrueexprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code trueexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitTrueexpr(ImpParser.TrueexprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code falseexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFalseexpr(ImpParser.FalseexprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code falseexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFalseexpr(ImpParser.FalseexprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ImpParser#operations}.
+	 * @param ctx the parse tree
+	 */
+	void enterOperations(ImpParser.OperationsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ImpParser#operations}.
+	 * @param ctx the parse tree
+	 */
+	void exitOperations(ImpParser.OperationsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code plusop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void enterPlusop(ImpParser.PlusopContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code plusop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void exitPlusop(ImpParser.PlusopContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code minusop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void enterMinusop(ImpParser.MinusopContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code minusop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void exitMinusop(ImpParser.MinusopContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code multiplicationop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiplicationop(ImpParser.MultiplicationopContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code multiplicationop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiplicationop(ImpParser.MultiplicationopContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code divisionop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void enterDivisionop(ImpParser.DivisionopContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code divisionop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void exitDivisionop(ImpParser.DivisionopContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code equalop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualop(ImpParser.EqualopContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code equalop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualop(ImpParser.EqualopContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code greaterop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterop(ImpParser.GreateropContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code greaterop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterop(ImpParser.GreateropContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code orop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrop(ImpParser.OropContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code orop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrop(ImpParser.OropContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code andop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndop(ImpParser.AndopContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code andop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndop(ImpParser.AndopContext ctx);
 }

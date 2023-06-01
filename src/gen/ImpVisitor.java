@@ -44,6 +44,13 @@ public interface ImpVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSkip(ImpParser.SkipContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code arnoldInit}
+	 * labeled alternative in {@link ImpParser#com}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArnoldInit(ImpParser.ArnoldInitContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code while}
 	 * labeled alternative in {@link ImpParser#com}.
 	 * @param ctx the parse tree
@@ -169,4 +176,112 @@ public interface ImpVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitId(ImpParser.IdContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ImpParser#program}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitProgram(ImpParser.ProgramContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ImpParser#arnoldIni}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArnoldIni(ImpParser.ArnoldIniContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ImpParser#coms}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComs(ImpParser.ComsContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code varexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarexpr(ImpParser.VarexprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numberexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumberexpr(ImpParser.NumberexprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code trueexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTrueexpr(ImpParser.TrueexprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code falseexpr}
+	 * labeled alternative in {@link ImpParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFalseexpr(ImpParser.FalseexprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ImpParser#operations}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperations(ImpParser.OperationsContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code plusop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPlusop(ImpParser.PlusopContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code minusop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMinusop(ImpParser.MinusopContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code multiplicationop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiplicationop(ImpParser.MultiplicationopContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code divisionop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDivisionop(ImpParser.DivisionopContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code equalop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualop(ImpParser.EqualopContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code greaterop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGreaterop(ImpParser.GreateropContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code orop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrop(ImpParser.OropContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code andop}
+	 * labeled alternative in {@link ImpParser#operation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAndop(ImpParser.AndopContext ctx);
 }
